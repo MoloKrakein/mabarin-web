@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mabarin | Dashboard</title>
+  <title>Mabarin | Create Services</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -45,7 +45,7 @@
         <a href="index3.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link"></a>
+        <a href="#" class="nav-link">Create Service</a>
       </li>
     </ul>
 
@@ -62,7 +62,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">Create Service Form</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -75,119 +75,63 @@
     </div>
     <!-- /.content-header -->
 
-    <!-- Main content -->
-        <section class="content">
-            <container class="container-fluid">
-        <!-- Card Row -->
-        <div class="row">
-            <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>150</h3>
+    <section class="content">
+      <!-- form -->
+      <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Service Info</h3>
 
-                <p>New Orders</p>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
               </div>
-              <div class="icon">
-                <i class="fas fa-shopping-cart"></i>
-              </div>
-              <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-              </a>
             </div>
-          </div>
-            <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
-
-                <p>Services</p>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="inputName">Service Name</label>
+                <input type="text" id="inputName" class="form-control">
               </div>
-              <div class="icon">
-                <i class="fas fa-shopping-cart"></i>
+              <div class="form-group">
+                <label for="inputDescription">Service Description</label>
+                <textarea id="inputDescription" class="form-control" rows="4"></textarea>
               </div>
-              <a href="service_create.php" class="small-box-footer">
-                Create Service <i class="fas fa-arrow-circle-right"></i>
-              </a>
+              <div class="form-group">
+                <label for="inputGame">Game Category</label>
+                <select id="inputGame" class="form-control custom-select">
+                  <option selected="" disabled="">Select one</option>
+                  <option>Mobile Legends</option>
+                  <option>Free Fire</option>
+                  <option>PUBG Mobile</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="inputPrice">Service Price</label>
+                <input type="number" id="inputPrice" class="form-control">
+              </div>
+              <div class="row">
+              <div class="form-group col-md-2">
+                <!-- service time start in hour -->
+                <label for="inputHourStart">Service Start</label>
+                <input type="time" id="inputHourStart" class="form-control" step="300">
+              </div>
+              <div class="form-group col-md-2">
+                <!-- service time start in hour -->
+                <label for="inputHourEnd">Service End</label>
+                <input type="time" id="inputHourEnd" class="form-control" step="300">
+              </div>
             </div>
-          </div>
+            <!-- Button clear and submit  -->
+            <div class="row">
+              <div class="col-12">
+                <a href="#" class="btn btn-danger">Cancel</a>
+                <input type="submit" value="Create new Service" class="btn btn-success float-right">
+              </div>
         </div>
-        <!-- /.card row -->
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Order List</h3>
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>User</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                      <th>Reason</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-success">Approved</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-warning">Pending</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-primary">Approved</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-danger">Denied</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
+            <!-- /.card-body -->
           </div>
-        </div>
-        </container>
-
-        </section>
-          <!-- /.Left col -->
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
-  
-    <!-- /.content -->
+    </section>
   </div>
   <!-- /.content-wrapper -->
   <div id="footer"></div>
