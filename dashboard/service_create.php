@@ -87,18 +87,19 @@
                 </button>
               </div>
             </div>
+            <form action="service_create_process.php" method="post">
             <div class="card-body">
               <div class="form-group">
                 <label for="inputName">Service Name</label>
-                <input type="text" id="inputName" class="form-control">
+                <input type="text" id="inputName" name="inputName" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputDescription">Service Description</label>
-                <textarea id="inputDescription" class="form-control" rows="4"></textarea>
+                <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4"></textarea>
               </div>
               <div class="form-group">
                 <label for="inputGame">Game Category</label>
-                <select id="inputGame" class="form-control custom-select">
+                <select id="inputGame" name="inputGame" class="form-control custom-select">
                   <option selected="" disabled="">Select one</option>
                   <option>Mobile Legends</option>
                   <option>Free Fire</option>
@@ -107,18 +108,18 @@
               </div>
               <div class="form-group">
                 <label for="inputPrice">Service Price</label>
-                <input type="number" id="inputPrice" class="form-control">
+                <input type="number" name="inputPrice" id="inputPrice" class="form-control">
               </div>
               <div class="row">
               <div class="form-group col-md-2">
                 <!-- service time start in hour -->
                 <label for="inputHourStart">Service Start</label>
-                <input type="time" id="inputHourStart" class="form-control" step="300">
+                <input type="time" name="inputHourStart" id="inputHourStart" class="form-control" step="300">
               </div>
               <div class="form-group col-md-2">
                 <!-- service time start in hour -->
                 <label for="inputHourEnd">Service End</label>
-                <input type="time" id="inputHourEnd" class="form-control" step="300">
+                <input type="time" name="inputHourEnd" id="inputHourEnd" class="form-control" step="300">
               </div>
             </div>
             <!-- Button clear and submit  -->
@@ -127,7 +128,8 @@
                 <a href="#" class="btn btn-danger">Cancel</a>
                 <input type="submit" value="Create new Service" class="btn btn-success float-right">
               </div>
-        </div>
+            </div>
+          </form>
 
             <!-- /.card-body -->
           </div>
@@ -185,7 +187,7 @@
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
 </body>
