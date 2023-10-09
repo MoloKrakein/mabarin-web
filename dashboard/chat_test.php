@@ -142,7 +142,7 @@
                   <div class="input-group">
                     <input type="text" id="message" name="message" placeholder="Type Message ..." class="form-control">
                     <span class="input-group-append">
-                      <button type="submit" id="submit" class="btn btn-primary">Send</button>
+                      <button id="submit" class="btn btn-primary">Send</button>
                     </span>
                   </div>
                 </form>
@@ -204,6 +204,7 @@
     authDomain: "mabarin-c1d84.firebaseapp.com",
     projectId: "mabarin-c1d84",
     storageBucket: "mabarin-c1d84.appspot.com",
+    databaseURL: "https://mabarin-c1d84-default-rtdb.asia-southeast1.firebasedatabase.app",
     messagingSenderId: "148935883756",
     appId: "1:148935883756:web:f1f48b0d2968e17fd79ec9",
     measurementId: "G-QS11PTV9JY"
@@ -227,6 +228,11 @@
     alert('Message sent!');
 
   });
+
+  const newMsg = ref(db, 'chat/');
+  // onChildAdded(newMsg,(data) =>{
+  //   if(data.)
+  // })
 
 console.log("Firebase connected successfully!");
 </script>
