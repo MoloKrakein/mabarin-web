@@ -113,7 +113,7 @@
                 <form action="#" method="post">
                   <div class="input-group">
                     <input type="text" id="message" name="message" placeholder="Type Message ..." class="form-control" autocomplete="off">
-                    <input type="hidden" id="time" name="time" value="<?php echo date('Y-m-d H:i:s'); ?>">
+                    <input type="hidden" id="time" name="time" value="<?php echo date('Y-m-d H:i'); ?>">
                     <span class="input-group-append">
                       <button id="submit" class="btn btn-primary">Send</button>
                     </span>
@@ -209,12 +209,15 @@
 
   onChildAdded(newMsg, (snapshot) => {
     const data = snapshot.val();
+    const time = moment(data.time, "YYYY-MM-DD HH:mm:ss");
+    const formattedTime = time.format("MMM D, YYYY h:mm A");
+
     if(snapshot.val().name == 'pembeli'){
       $('.direct-chat-messages').append(
         '<div class="direct-chat-msg right">'+
           '<div class="direct-chat-infos clearfix">'+
             '<span class="direct-chat-name float-right">'+data.name+'</span>'+
-            '<span class="direct-chat-timestamp float-left">'+data.time+'</span>'+
+            '<span class="direct-chat-timestamp float-left">'+formattedTime+'</span>'+
           '</div>'+
           '<img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="Message User Image">'+
           '<div class="direct-chat-text">'+
@@ -227,7 +230,7 @@
         '<div class="direct-chat-msg">'+
           '<div class="direct-chat-infos clearfix">'+
             '<span class="direct-chat-name float-left">'+data.name+'</span>'+
-            '<span class="direct-chat-timestamp float-right">'+data.time+'</span>'+
+            '<span class="direct-chat-timestamp float-right">'+formattedTime+'</span>'+
           '</div>'+
           '<img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">'+
           '<div class="direct-chat-text">'+
