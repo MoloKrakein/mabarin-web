@@ -100,35 +100,7 @@
                 <!-- Conversations are loaded here -->
                 <div class="direct-chat-messages">
                   <!-- Message. Default to the left -->
-                  <div class="direct-chat-msg">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-left">Alexander Pierce</span>
-                      <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                    hello
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
-
-                  <!-- Message to the right -->
-                  <div class="direct-chat-msg right">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-right">Sarah Bullock</span>
-                      <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="Message User Image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      Hi
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
+                  
                   <!-- /.direct-chat-msg -->
                 </div>
                 <!--/.direct-chat-messages-->
@@ -140,7 +112,8 @@
               <div class="card-footer">
                 <form action="#" method="post">
                   <div class="input-group">
-                    <input type="text" id="message" name="message" placeholder="Type Message ..." class="form-control">
+                    <input type="text" id="message" name="message" placeholder="Type Message ..." class="form-control" autocomplete="off">
+                    <input type="hidden" id="time" name="time" value="<?php echo date('Y-m-d H:i:s'); ?>">
                     <span class="input-group-append">
                       <button id="submit" class="btn btn-primary">Send</button>
                     </span>
@@ -193,7 +166,7 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
-  import { getDatabase, ref, set, push, child, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+  import { getDatabase, ref, set, push, child, onValue,onChildAdded } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -219,20 +192,51 @@
     e.preventDefault();
     var message = document.getElementById('message').value;
     var name = 'pembeli'
+    var time = document.getElementById('time').value;
 
     const id = push(child(ref(db), 'chat')).key;
     set(ref(db, 'chat/' + id), {
       name: name,
-      message: message
+      message: message,
+      time: time
     });
-    alert('Message sent!');
+    // alert('Message sent!');
+    document.getElementById('message').value = '';
 
   });
 
   const newMsg = ref(db, 'chat/');
-  // onChildAdded(newMsg,(data) =>{
-  //   if(data.)
-  // })
+
+  onChildAdded(newMsg, (snapshot) => {
+    const data = snapshot.val();
+    if(snapshot.val().name == 'pembeli'){
+      $('.direct-chat-messages').append(
+        '<div class="direct-chat-msg right">'+
+          '<div class="direct-chat-infos clearfix">'+
+            '<span class="direct-chat-name float-right">'+data.name+'</span>'+
+            '<span class="direct-chat-timestamp float-left">'+data.time+'</span>'+
+          '</div>'+
+          '<img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="Message User Image">'+
+          '<div class="direct-chat-text">'+
+            data.message+
+          '</div>'+
+        '</div>'
+      );
+    }else{
+      $('.direct-chat-messages').append(
+        '<div class="direct-chat-msg">'+
+          '<div class="direct-chat-infos clearfix">'+
+            '<span class="direct-chat-name float-left">'+data.name+'</span>'+
+            '<span class="direct-chat-timestamp float-right">'+data.time+'</span>'+
+          '</div>'+
+          '<img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">'+
+          '<div class="direct-chat-text">'+
+            data.message+
+          '</div>'+
+        '</div>'
+      );
+    }
+  });
 
 console.log("Firebase connected successfully!");
 </script>
