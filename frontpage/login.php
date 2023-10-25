@@ -9,15 +9,17 @@
 <body>
     <div class="form-container">
         <h2>Login</h2>
-        <form class="vertical-form">
+        <form class="vertical-form" action="process-login.php" method="POST">
             <label for="email">Email:</label>
-            <input type="text" id="email" name="email">
+            <input type="text" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password" required>
 
             <button type="submit">Login</button>
         </form>
+
+
     </div>
     <button onclick="goBack()">Go Back</button>
 

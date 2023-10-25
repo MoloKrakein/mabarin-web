@@ -1,39 +1,43 @@
 <?php
+        // Start the session
+        session_start();
+
         // Connect to the database
-        $host = "localhost";
-        $database = "mabarin";
-    
+        $servername = "localhost";
         $username = "root";
         $password = "";
-    
-        $conn = mysqli_connect($host, $username, $password, $database);
-    
+        $dbname = "mabarin";
+
+        $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+        // Check connection
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
-        // Get the user input from the form
-        $username = $_POST["username"];
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-        $confirm_password = $_POST["confirm_password"];
-
-        // Check if the passwords match
-        if ($password != $confirm_password) {
-            die("Passwords do not match");
-        }
-
-        // Hash the password
+        // Get the user input
+        $email = $_POST['email'];
+        $password = $_POST['password'];
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insert the user data into the database
-        $sql = "INSERT INTO customer (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
+        $sql = "SELECT * FROM `customer` WHERE `customer_email` = '$email'";
+        $result = mysqli_query($conn, $sql);
 
-        if ($conn->query($sql) === TRUE) {
-            echo "Registration successful";
+
+        // Check if the user exists
+        if (mysqli_num_rows($result) == 1) {
+            // User exists, set session variables and redirect to home page
+            $row = mysqli_fetch_assoc($result);
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['user_email'] = $row['email'];
+            header("Location: index.html");
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            // User does not exist, redirect to login page with error message
+            echo "Invalid email or password";
+            $_SESSION['login_error'] = "Invalid email or password";
+            header("Location: login.php");
         }
 
-        $conn->close();
+        // Close the database connection
+        mysqli_close($conn);
         ?>
