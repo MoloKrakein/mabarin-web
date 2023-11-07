@@ -1,7 +1,12 @@
 <?php
-// import config.php
-require_once "config.php";
-// session_start();
+session_start();
+if(isset($_SESSION['user_id'])) {
+    echo "User ID: " . $_SESSION['user_id'] . "<br>";
+    echo "User Email: " . $_SESSION['user_email'];
+} else {
+    echo "User is not logged in!";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -11,25 +16,27 @@ require_once "config.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Mabarin Apps</title>
+    <title>Document</title>
 </head>
 
 <body style="background-color: #141414;">
-<div class="container-fluid">
+    <div class="container-fluid">
         <nav class="navbar bg-body-dark border-bottom sticky-top">
             <div class="container-fluid">
                 <img src="assets/LOGO.png" alt="logo">
                 <form class="d-flex" role="search">
-                   <?php
-                   session_start();
-                   if (isset($_SESSION['email'])) {
-                       echo '<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Profile">Profile</button>';
-                       echo '<button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Logout">Logout</button>';
-                   } else {
-                       echo '<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Sign_In">Sign Up</button>';
-                       echo '<button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Log_In">Log In</button>';
-                   }
-                   ?>
+                    
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Profile">Profile</button>
+                    <a href="logout.php" class="btn btn-warning ms-3">Sign Out</a>
+                <?php else: ?>
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Sign_Up">Sign Up</button>
+                    <button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Log_In">Log In</button>
+                <?php endif; ?>
+
+                    <!-- <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Sign_In">Sign Up</button>
+                    <button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Log_In">Log In</button> -->
+
                 </form>
             </div>
         </nav>
@@ -292,66 +299,78 @@ require_once "config.php";
     </div>
 
 
-                            <!-- Login -->
-                            <div class="modal fade" id="Log_In" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <h4 class="text-center">Selamat Datang Di Mabarin</h4>
-        <h5 class="text-center" style="font-weight: 400;">Belum memiliki akun? <a style="font-weight: 400;">Sign In</a></h5>
-        <form action="login.php" method="post">
-          <div class="input-group mb-3 mt-5 container">
-            <input type="text" class="form-control" placeholder="Email" name="email" aria-label="Username" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-3 container">
-            <input type="password" class="form-control" placeholder="Password" name="password" aria-label="Username" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-3 container">
-            <button type="submit" class="btn btn-info w-100">Masuk</button>
-          </div>
-        </form>
-        <div class="input-group mb-3 container">
-          <div class="col-5 mt-3 d-flex justify-content-end">
-            <div style="border-top: 1px solid #AAAAAA; width: 100%;"></div>
-          </div>
-          <div class="col-2">
-            <p class="text-center" style="color: #AAAAAA; font-size: 18px;">Atau</p>
-          </div>
-          <div class="col-5 mt-3">
-            <div style="border-top: 1px solid #AAAAAA; width: 100%;"></div>
-          </div>
-        </div>
-        <div class="input-group mb-3 container">
-          <button class="btn btn-outline-dark w-100" type="button" id="google_btn">Sign in dengan akun Google</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-                            <!-- Register -->
-                            <div class="modal fade" id="Sign_In" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h4 class="text-center">Selamat Datang Di Mabarin</h4>
-                <h5 class="text-center" style="font-weight: 400;">Sudah memiliki akun? <a style="font-weight: 400;">Log In</a></h5>
-                <form action="register.php" method="post">
+    <!-- Modal -->
+    <div class="modal fade" id="Log_In" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="text-center">Selamat Datang Di Mabarin</h4>
+                    <h5 class="text-center" style="font-weight: 400;">Belum memiliki akun? <a style="font-weight: 400;">Sign In</a></h5>
                     <div class="input-group mb-3 mt-5 container">
-                        <input id="regis-email" name="email" type="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" required>
+                        <input type="text" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3 container">
-                        <input id="regis-pass" name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
+                        <input type="text" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3 container">
-                        <button type="submit" class="btn btn-info w-100">Daftar</button>
+                        <button class="btn btn-info w-100" type="button">Masuk</button>
                     </div>
-                </form>
+                    
+                    <div class="input-group mb-3 container">
+                        <div class="col-5 mt-3 d-flex justify-content-end">
+                            <div style="border-top: 1px solid #AAAAAA; width: 100%;"></div>
+                        </div>
+                        <div class="col-2">
+                            <p class="text-center" style="color: #AAAAAA; font-size: 18px;">Atau</p>
+                        </div>
+                        <div class="col-5 mt-3">
+                            <div style="border-top: 1px solid #AAAAAA; width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3 container">
+                        <button class="btn btn-outline-dark w-100" type="button" id="google_btn">Sign in dengan akun Google</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <div class="modal fade" id="Sign_In" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="text-center">Selamat Datang Di Mabarin</h4>
+                    <h5 class="text-center" style="font-weight: 400;">Sudah memiliki akun? <a style="font-weight: 400;">Log In</a></h5>
+                    <div class="input-group mb-3 mt-5 container">
+                        <input id="sign-up-email" type="text" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3 container">
+                        <input id="sign-up-pass" type="text" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3 container">
+                        <button id="sign-up" class="btn btn-info w-100" type="button">Daftar</button>
+                    </div>
+                    
+                    <div class="input-group mb-3 container">
+                        <div class="col-5 mt-3 d-flex justify-content-end">
+                            <div style="border-top: 1px solid #AAAAAA; width: 100%;"></div>
+                        </div>
+                        <div class="col-2">
+                            <p class="text-center" style="color: #AAAAAA; font-size: 18px;">Atau</p>
+                        </div>
+                        <div class="col-5 mt-3">
+                            <div style="border-top: 1px solid #AAAAAA; width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3 container">
+                        <button id="sign-up-google" class="btn btn-outline-dark w-100" type="button">Sign up dengan akun Google</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
@@ -419,19 +438,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const provider = new GoogleAuthProvider();
-// const auth = getAuth();
+const auth = getAuth();
 // const auth2 = app.auth();
 
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const getauth = getAuth();
+// const auth = firebase.auth();
 // const provider = new GoogleAuthProvider();
 // const app = initializeApp(firebaseConfig);
 
 const google_btn = document.getElementById('google_btn');
 google_btn.addEventListener('click', () => {
     signInWithRedirect(auth, provider);
-
 });
 
 
@@ -439,19 +456,17 @@ const sign_up = document.getElementById('sign-up');
 sign_up.addEventListener('click', () => {
     // e.preventDefault();
 
-    const email = document.getElementById('regis-email').value;
-    const password = document.getElementById('regis-pass').value;
+    const email = document.getElementById('sign-up-email').value;
+    const password = document.getElementById('sign-up-pass').value;
 
     auth.createUserWithEmailAndPassword(email, password).then(cred => {
         console.log(cred.user);
-        // saveUserSession(cred.user);
     })
 });
 
 const sign_up_google = document.getElementById('sign-up-google');
 sign_up_google.addEventListener('click', () => {
     signInWithRedirect(auth, provider);
-
 });
 
 getRedirectResult(auth)
@@ -462,7 +477,6 @@ getRedirectResult(auth)
     // The signed-in user info.
     const user = result.user;
     console.log(user);
-    // saveUserSession(user);
     // ...
   }).catch((error) => {
     // Handle Errors here.
@@ -471,51 +485,6 @@ getRedirectResult(auth)
     console.log(errorCode);
     console.log(errorMessage);
   });
-  
-
-  const login = document.getElementById('login');
-    login.addEventListener('click', () => {
-        // e.preventDefault();
-    
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-pass').value;
-    
-        auth.signInWithEmailAndPassword(email, password).then(cred => {
-            console.log(cred.user);
-            saveUserSession(cred.user);
-        })
-    });
-
-//     auth.onAuthStateChanged(user => {
-//   if (user) {
-//     // Pengguna telah login
-//     const email = user.email;
-//     const username = user.displayName; // Atau user.username tergantung pada bagaimana Anda menetapkan username
-
-//     // Kirim data ke signup-process.php menggunakan fetch
-//     fetch('signupProcess.php', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/x-www-form-urlencoded',
-//       },
-//       body: `email=${email}&username=${username}`
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//       console.log(data);
-//       // Redirect ke halaman setelah sign up (misalnya, halaman utama)
-//       window.location.href = 'index.php';
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//     });
-//   } else {
-//     <?php
-//     echo 'console.log("User belum login")';
-//     ?>
-//   }
-});
-
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
