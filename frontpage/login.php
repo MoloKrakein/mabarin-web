@@ -2,28 +2,28 @@
 session_start();
 
 require_once 'config.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $email = $_POST['email'];
   $password = $_POST['password'];
-
-  $query = "SELECT * FROM customer WHERE email = '$email'";
+  $password = md5($password);
+  // $hashed_password = md5($password);
+  $query = "SELECT * FROM customer WHERE email = '$email' AND pass = '$password'";
   $result = mysqli_query($conn, $query);
-
   if (mysqli_num_rows($result) > 0) {
-    $user = mysqli_fetch_assoc($result);
-
-    if (password_verify($password, $user['pass'])) {
-      $_SESSION['email'] = $user['email'];
-      $_SESSION['username'] = $user['username'];
-
-      header('Location: index.php');
-      exit;
-    } else {
-      echo 'Invalid password';
-    }
+    $_SESSION['email'] = $email;
+    header('Location: index.php');
   } else {
-    // modal gagal login
-    echo 'User not found';
+    // echo "Invalid email or password.";
+    $getpass = "SELECT pass FROM customer WHERE email = '$email'";
+    $result = mysqli_query($conn, $getpass);
+    $row = mysqli_fetch_assoc($result);
+
+    // echo $hashed_password;
+    echo $password;
+    echo "<br>";
+    echo $row['pass'];
+
   }
 }
 ?>

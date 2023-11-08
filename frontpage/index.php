@@ -301,10 +301,10 @@ require_once "config.php";
         <h5 class="text-center" style="font-weight: 400;">Belum memiliki akun? <a style="font-weight: 400;">Sign In</a></h5>
         <form action="login.php" method="post">
           <div class="input-group mb-3 mt-5 container">
-            <input type="text" class="form-control" placeholder="Email" name="email" aria-label="Username" aria-describedby="basic-addon1">
+            <input id="login-email" type="text" class="form-control" placeholder="Email" name="email" aria-label="Username" aria-describedby="basic-addon1">
           </div>
           <div class="input-group mb-3 container">
-            <input type="password" class="form-control" placeholder="Password" name="password" aria-label="Username" aria-describedby="basic-addon1">
+            <input id="login-pass" type="password" class="form-control" placeholder="Password" name="password" aria-label="Username" aria-describedby="basic-addon1">
           </div>
           <div class="input-group mb-3 container">
             <button type="submit" class="btn btn-info w-100">Masuk</button>
