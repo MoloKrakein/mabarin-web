@@ -19,7 +19,7 @@
         </div> -->
 
         <!-- SidebarSearch Form -->
-        <div class="form-inline">
+        <!-- <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
                 <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
@@ -27,6 +27,20 @@
                         <i class="fas fa-search fa-fw"></i>
                     </button>
                 </div>
+            </div>
+        </div> -->
+
+        <!-- Button to create service -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="info">
+                <a href="service_create.php" class="btn btn-primary btn-block"><b>Create Service</b></a>
+            </div>
+        </div>
+
+        <!-- back to frontpage -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="info">
+                <a href="../frontpage/index.php" class="btn btn-primary btn-block"><b>Back to Frontpage</b></a>
             </div>
         </div>
 

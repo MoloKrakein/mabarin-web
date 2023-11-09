@@ -1,3 +1,11 @@
+<?php
+// check if the user is logged in with vendor session
+session_start();
+if (!isset($_SESSION['email']) || !isset($_SESSION['vendor'])) {
+  header('Location: ../frontpage/index.php');
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,7 +50,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="../frontpage/index.php" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link"></a>
@@ -66,8 +74,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item"><a href="../frontpage/index.php">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -100,12 +108,23 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3><?php
+                require_once 'config.php';
+                $vendor_id = $_SESSION['vendor_id'];
+                $sql = "SELECT * FROM service WHERE vendor_id = $vendor_id";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+                $count = mysqli_num_rows($result);
+                echo $count;
+                $conn->close();
+                // echo $sql;
+
+                ?></h3>
 
                 <p>Services</p>
               </div>
               <div class="icon">
-                <i class="fas fa-shopping-cart"></i>
+                <i class="ion ion-stats-bars"></i>
               </div>
               <a href="service_create.php" class="small-box-footer">
                 Create Service <i class="fas fa-arrow-circle-right"></i>
@@ -120,59 +139,43 @@
               <div class="card-header">
                 <h3 class="card-title">Order List</h3>
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
+                  <?php
+                  include "config.php";
+                  // $sql = "SELECT * FROM orders WHERE vendor_id = " . $_SESSION['vendor_id'];
+                  // $result = $conn->query($sql);
+
+
+                  ?>
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>User</th>
-                      <th>Date</th>
+                      <th>Customer Email</th>
+                      <th>Service</th>
+                      <th>Order Date</th>
                       <th>Status</th>
-                      <th>Reason</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-success">Approved</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-warning">Pending</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-primary">Approved</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-danger">Denied</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
+                    <?php
+                    $vendorid = $_SESSION['vendor_id'];
+                    $sql = "SELECT * FROM order_view WHERE vendor_id = $vendorid";
+                    // $sql = "SELECT * FROM order_view";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                      while($row = $result->fetch_assoc()) {
+                        echo "<tr><td>" . $row["email"] . "</td><td>" . $row["service_name"] . "</td><td>" . $row["order_date"] . "</td><td>" . $row["status"] . "</td><td><a href='order_detail.php?order_id=" . $row["order_id"] . "'>Detail</a></td></tr>";
+                      }
+                      
+                    }else{
+                      echo "<tr><td colspan='5'>No order yet.</td></tr>";
+                    }
+
+                    ?>
                   </tbody>
                 </table>
               </div>
@@ -180,6 +183,57 @@
             </div>
             <!-- /.card -->
           </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Active Service</h3>
+
+                
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <?php
+                  include "config.php";
+                  // $sql = "SELECT * FROM orders WHERE vendor_id = " . $_SESSION['vendor_id'];
+                  // $result = $conn->query($sql);
+
+
+                  ?>
+                  <thead>
+                    <tr>
+                      <th>Service Name</th>
+                      <th>Games</th>
+                      <th>Description</th>
+                      <th>Start Hour</th>
+                      <th>End Hour</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $vendorid = $_SESSION['vendor_id'];
+                    $sql = "SELECT * FROM service WHERE vendor_id = $vendorid";
+                    // $sql = "SELECT * FROM order_view";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                      while($row = $result->fetch_assoc()) {
+                        echo "<tr><td>" . $row["service_name"] . "</td><td>" . $row["service_game"] . "</td><td>" . $row["service_description"] . "</td><td>" . $row["service_start_hour"] . "</td><td>" . $row["service_end_hour"] . "</td><td><a href='service_edit.php?service_id=" . $row["service_id"] . "'>Edit</a></td></tr>";
+                      }
+                      
+                    }else{
+                      echo "<tr><td colspan='5'>No order yet.</td></tr>";
+                    }
+
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          
         </div>
         </container>
 

@@ -62,7 +62,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Create Service Form</h1>
+            <h1 class="m-0">Edit Service Form</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -87,47 +87,61 @@
                 </button>
               </div>
             </div>
-            <form action="service_create_process.php" method="post">
+            <?php
+              // Include file konfigurasi koneksi ke database
+              include "config.php";
+
+              // Ambil service_id dari query string
+              $service_id = $_GET['service_id'];
+
+              // Query SQL untuk mendapatkan data layanan dari database
+              $sql = "SELECT * FROM service WHERE service_id = $service_id";
+              $result = $conn->query($sql);
+              $service = $result->fetch_assoc();
+            ?>
+            <form action="service_edit_process.php" method="post">
+              <input type="hidden" name="inputServiceId" value="<?php echo $service['service_id']; ?>">
               <input type="hidden" name="inputVendorId" value="<?php echo $_SESSION['vendor_id']; ?>">
             <div class="card-body">
               <div class="form-group">
                 <label for="inputName">Service Name</label>
-                <input type="text" id="inputName" name="inputName" class="form-control">
+                <input type="text" id="inputName" name="inputName" class="form-control" value="<?php echo $service['service_name']; ?>">
               </div>
               <div class="form-group">
                 <label for="inputDescription">Service Description</label>
-                <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4"></textarea>
+                <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4"><?php echo $service['service_description']; ?></textarea>
               </div>
               <div class="form-group">
                 <label for="inputGame">Game Category</label>
                 <select id="inputGame" name="inputGame" class="form-control custom-select">
                   <option selected="" disabled="">Select one</option>
-                  <option>Mobile Legends</option>
-                  <option>Free Fire</option>
-                  <option>PUBG Mobile</option>
+                  <option <?php if($service['service_game'] == "Mobile Legends") echo "selected"; ?>>Mobile Legends</option>
+                  <option <?php if($service['service_game'] == "Free Fire") echo "selected"; ?>>Free Fire</option>
+                  <option <?php if($service['service_game'] == "PUBG Mobile") echo "selected"; ?>>PUBG Mobile</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="inputPrice">Service Price</label>
-                <input type="number" name="inputPrice" id="inputPrice" class="form-control">
+                <input type="number" name="inputPrice" id="inputPrice" class="form-control" value="<?php echo $service['service_price']; ?>">
               </div>
               <div class="row">
               <div class="form-group col-md-2">
                 <!-- service time start in hour -->
                 <label for="inputHourStart">Service Start</label>
-                <input type="time" name="inputHourStart" id="inputHourStart" class="form-control" step="300">
+                <input type="time" name="inputHourStart" id="inputHourStart" class="form-control" step="300" value="<?php echo $service['service_start_hour']; ?>">
               </div>
               <div class="form-group col-md-2">
                 <!-- service time start in hour -->
                 <label for="inputHourEnd">Service End</label>
-                <input type="time" name="inputHourEnd" id="inputHourEnd" class="form-control" step="300">
+                <input type="time" name="inputHourEnd" id="inputHourEnd" class="form-control" step="300" value="<?php echo $service['service_end_hour']; ?>">
               </div>
             </div>
             <!-- Button clear and submit  -->
             <div class="row">
               <div class="col-12">
-                <a href="#" class="btn btn-danger">Cancel</a>
-                <input type="submit" value="Create new Service" class="btn btn-success float-right">
+                <a href="#" class="btn btn-warning">Cancel</a>
+                <a href="service_delete_process.php?service_id=<?php echo $service['service_id']; ?>" class="btn btn-danger">Delete Service</a>
+                <input type="submit" value="Update Service" class="btn btn-success float-right">
               </div>
             </div>
           </form>
@@ -136,6 +150,7 @@
           </div>
     </section>
   </div>
+
   <!-- /.content-wrapper -->
   <div id="footer"></div>
 

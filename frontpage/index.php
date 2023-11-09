@@ -24,11 +24,15 @@ require_once "config.php";
                    session_start();
                    if (isset($_SESSION['email'])) {
                        echo '<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Profile">Profile</button>';
-                       echo '<button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Logout">Logout</button>';
+                       if(isset($_SESSION['vendor'])){
+                           echo '<a href="../dashboard/index.php" class="btn btn-warning ms-3">Dashboard</a>';
+                       }
+                       echo '<a href="logout.php" class="btn btn-danger ms-3">Log Out</a>';
                    } else {
                        echo '<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Sign_In">Sign Up</button>';
                        echo '<button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Log_In">Log In</button>';
                    }
+
                    ?>
                 </form>
             </div>
@@ -255,6 +259,12 @@ require_once "config.php";
         <div class="row mt-5">
             <h3 class="text-center" style="color:#08D3FF;">Cara Kerja</h3>
             <img class="mt-5" src="assets/Group 26.png" alt="logo" class="d-block mx-auto mt-5">
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn" style="background-color: #FAFF12; width: 15%;" data-bs-toggle="modal" data-bs-target="#vendor">
+                    <p  class="text-center mt-1" style="color: #141414; font-size: 20px; font-weight: 800;">Daftar Vendor</p>
+                </button>
+            </div>
+
         </div>
 
         <div class="row mt-4">
@@ -290,10 +300,11 @@ require_once "config.php";
         </div>
 
     </div>
+        <!-- Daftar Vendor -->
 
 
                             <!-- Login -->
-                            <div class="modal fade" id="Log_In" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Log_In" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
@@ -310,27 +321,13 @@ require_once "config.php";
             <button type="submit" class="btn btn-info w-100">Masuk</button>
           </div>
         </form>
-        <div class="input-group mb-3 container">
-          <div class="col-5 mt-3 d-flex justify-content-end">
-            <div style="border-top: 1px solid #AAAAAA; width: 100%;"></div>
-          </div>
-          <div class="col-2">
-            <p class="text-center" style="color: #AAAAAA; font-size: 18px;">Atau</p>
-          </div>
-          <div class="col-5 mt-3">
-            <div style="border-top: 1px solid #AAAAAA; width: 100%;"></div>
-          </div>
-        </div>
-        <div class="input-group mb-3 container">
-          <button class="btn btn-outline-dark w-100" type="button" id="google_btn">Sign in dengan akun Google</button>
-        </div>
       </div>
     </div>
   </div>
 </div>
 
                             <!-- Register -->
-                            <div class="modal fade" id="Sign_In" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Sign_In" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -352,7 +349,27 @@ require_once "config.php";
     </div>
 </div>
 
-
+<div class="modal fade" id="vendor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="text-center">Daftar Vendor Mabarin</h4>
+        <form action="register_vendor.php" method="post">
+          <div class="input-group mb-3 mt-5 container">
+            <input id="login-email" type="text" class="form-control" placeholder="Email" name="email" aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3 container">
+            <input id="login-pass" type="password" class="form-control" placeholder="Password" name="password" aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3 container">
+            <button type="submit" class="btn btn-info w-100">Daftar</button>
+          </div>
+        </form>
+        <div class="input-group mb-3 container">
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 
 
