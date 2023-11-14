@@ -12,6 +12,15 @@ require_once "config.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Mabarin Apps</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <!-- <link rel="stylesheet" href="../dashboard/dist/css/adminlte.min.css"> -->
+  <!-- overlayScrollbars -->
+
 </head>
 
 <body style="background-color: #141414;">
@@ -213,12 +222,12 @@ require_once "config.php";
         </div>
         <div class="row mt-3">
             <div class="d-flex justify-content-center">
-                <button type="button" class="btn" style="background-color: #FAFF12; width: 15%;">
+                <button type="button" class="btn" style="background-color: #FAFF12; width: 15%;" data-bs-toggle="modal" data-bs-target="#service-list">
                     <p class="text-center mt-1" style="color: #141414; font-size: 20px; font-weight: 800;">Cari Teman</p>
-                    <div class="d-flex justify-content-center mt-1">
+                    <!-- <div class="d-flex justify-content-center mt-1">
                         <div style="border-top: 2px solid black; width: 220px;"></div>
                     </div>
-                    <p class="text-center mt-2" style="color: #141414; font-size: 20px; font-weight: 800;">Rp. 1000</p>
+                    <p class="text-center mt-2" style="color: #141414; font-size: 20px; font-weight: 800;">Rp. 1000</p> -->
                 </button>
             </div>
         </div>
@@ -348,7 +357,331 @@ require_once "config.php";
         </div>
     </div>
 </div>
-
+<!-- service-list -->
+<div class="modal fade" id="service-list" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content" style="background-color: #141414; color: #ffffff;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cari Teman</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #FAFF12; background-color: #FAFF12"></button>
+            </div>
+            <div class="modal-body" style="overflow-y: auto;">
+            <div class="card card-solid">
+        <div class="card-body pb-0">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">
+                  Digital Strategist
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>Nicole Pearson</b></h2>
+                      <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                      </ul>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a href="#" class="btn btn-sm bg-teal">
+                      <i class="fas fa-comments"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> View Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">
+                  Digital Strategist
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>Nicole Pearson</b></h2>
+                      <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                      </ul>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="../../dist/img/user2-160x160.jpg" alt="user-avatar" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a href="#" class="btn btn-sm bg-teal">
+                      <i class="fas fa-comments"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> View Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">
+                  Digital Strategist
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>Nicole Pearson</b></h2>
+                      <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                      </ul>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a href="#" class="btn btn-sm bg-teal">
+                      <i class="fas fa-comments"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> View Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">
+                  Digital Strategist
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>Nicole Pearson</b></h2>
+                      <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                      </ul>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="../../dist/img/user2-160x160.jpg" alt="user-avatar" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a href="#" class="btn btn-sm bg-teal">
+                      <i class="fas fa-comments"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> View Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">
+                  Digital Strategist
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>Nicole Pearson</b></h2>
+                      <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                      </ul>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a href="#" class="btn btn-sm bg-teal">
+                      <i class="fas fa-comments"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> View Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">
+                  Digital Strategist
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>Nicole Pearson</b></h2>
+                      <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                      </ul>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a href="#" class="btn btn-sm bg-teal">
+                      <i class="fas fa-comments"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> View Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">
+                  Digital Strategist
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>Nicole Pearson</b></h2>
+                      <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                      </ul>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a href="#" class="btn btn-sm bg-teal">
+                      <i class="fas fa-comments"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> View Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">
+                  Digital Strategist
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>Nicole Pearson</b></h2>
+                      <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                      </ul>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a href="#" class="btn btn-sm bg-teal">
+                      <i class="fas fa-comments"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> View Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">
+                  Digital Strategist
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>Nicole Pearson</b></h2>
+                      <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                      </ul>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="../../dist/img/user2-160x160.jpg" alt="user-avatar" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a href="#" class="btn btn-sm bg-teal">
+                      <i class="fas fa-comments"></i>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> View Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          <nav aria-label="Contacts Page Navigation">
+            <ul class="pagination justify-content-center m-0">
+              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">4</a></li>
+              <li class="page-item"><a class="page-link" href="#">5</a></li>
+              <li class="page-item"><a class="page-link" href="#">6</a></li>
+              <li class="page-item"><a class="page-link" href="#">7</a></li>
+              <li class="page-item"><a class="page-link" href="#">8</a></li>
+            </ul>
+          </nav>
+        </div>
+        <!-- /.card-footer -->
+      </div>
+            </div>
+            <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+<!-- Daftar Vendor -->
 <div class="modal fade" id="vendor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -370,8 +703,15 @@ require_once "config.php";
     </div>
   </div>
 </div>
+<!-- Cari Service modal -->
+
+
 </body>
 
+<!-- AdminLTE App -->
+<!-- <script src="../dashboard/dist/js/adminlte.js"></script> -->
+<!-- AdminLTE for demo purposes -->
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 
 
 <!-- <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
@@ -411,129 +751,7 @@ require_once "config.php";
 
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
-<script type="module">
-    // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
-import { GoogleAuthProvider, getAuth, signInWithRedirect, getRedirectResult} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDwmggIXG-wHw8zclFje9-QI8KHkNaQqd4",
-  authDomain: "mabarin-c1d84.firebaseapp.com",
-  databaseURL: "https://mabarin-c1d84-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "mabarin-c1d84",
-  storageBucket: "mabarin-c1d84.appspot.com",
-  messagingSenderId: "148935883756",
-  appId: "1:148935883756:web:f1f48b0d2968e17fd79ec9",
-  measurementId: "G-QS11PTV9JY"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const provider = new GoogleAuthProvider();
-// const auth = getAuth();
-// const auth2 = app.auth();
-
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const getauth = getAuth();
-// const provider = new GoogleAuthProvider();
-// const app = initializeApp(firebaseConfig);
-
-const google_btn = document.getElementById('google_btn');
-google_btn.addEventListener('click', () => {
-    signInWithRedirect(auth, provider);
-
-});
-
-
-const sign_up = document.getElementById('sign-up');
-sign_up.addEventListener('click', () => {
-    // e.preventDefault();
-
-    const email = document.getElementById('regis-email').value;
-    const password = document.getElementById('regis-pass').value;
-
-    auth.createUserWithEmailAndPassword(email, password).then(cred => {
-        console.log(cred.user);
-        // saveUserSession(cred.user);
-    })
-});
-
-const sign_up_google = document.getElementById('sign-up-google');
-sign_up_google.addEventListener('click', () => {
-    signInWithRedirect(auth, provider);
-
-});
-
-getRedirectResult(auth)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    console.log(user);
-    // saveUserSession(user);
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode);
-    console.log(errorMessage);
-  });
-  
-
-  const login = document.getElementById('login');
-    login.addEventListener('click', () => {
-        // e.preventDefault();
-    
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-pass').value;
-    
-        auth.signInWithEmailAndPassword(email, password).then(cred => {
-            console.log(cred.user);
-            saveUserSession(cred.user);
-        })
-    });
-
-//     auth.onAuthStateChanged(user => {
-//   if (user) {
-//     // Pengguna telah login
-//     const email = user.email;
-//     const username = user.displayName; // Atau user.username tergantung pada bagaimana Anda menetapkan username
-
-//     // Kirim data ke signup-process.php menggunakan fetch
-//     fetch('signupProcess.php', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/x-www-form-urlencoded',
-//       },
-//       body: `email=${email}&username=${username}`
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//       console.log(data);
-//       // Redirect ke halaman setelah sign up (misalnya, halaman utama)
-//       window.location.href = 'index.php';
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//     });
-//   } else {
-//     <?php
-//     echo 'console.log("User belum login")';
-//     ?>
-//   }
-});
-
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </html>
