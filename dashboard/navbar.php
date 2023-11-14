@@ -29,7 +29,11 @@
                 </div>
             </div>
         </div> -->
-
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="info">
+                <a href="index.php" class="btn btn-primary btn-block"><b>Main Dashboard</b></a>
+            </div>
+        </div>
         <!-- Button to create service -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="info">

@@ -35,22 +35,7 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Create Service</a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-  </nav>
+    <div id="topbar"></div>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -76,6 +61,25 @@
     <!-- /.content-header -->
 
     <section class="content">
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this service?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <a href="#" id="deleteServiceBtn" class="btn btn-danger">Delete Service</a>
+      </div>
+    </div>
+  </div>
+</div>
       <!-- form -->
       <div class="card card-primary">
             <div class="card-header">
@@ -156,7 +160,7 @@
             <div class="row">
               <div class="col-12">
                 <a href="#" class="btn btn-warning">Cancel</a>
-                <a href="service_delete_process.php?service_id=<?php echo $service['service_id']; ?>" class="btn btn-danger">Delete Service</a>
+                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal" id="deleteBtn">Delete Service</a>
                 <input type="submit" value="Update Service" class="btn btn-success float-right">
               </div>
             </div>
@@ -194,8 +198,21 @@
     $(function() {
         $("#footer").load("footer.php");
     })
+    $(function() {
+        $("#topbar").load("topbar.php");
+    })
 
 </script>
+<script>
+  $(document).ready(function() {
+    $('#deleteBtn').click(function() {
+      var serviceId = <?php echo $service['service_id']; ?>;
+      var deleteUrl = 'delete_service.php?service_id=' + serviceId;
+      $('#deleteServiceBtn').attr('href', deleteUrl);
+    });
+  });
+</script>
+
 <script>
   // Fungsi untuk menampilkan nama file yang dipilih dan preview gambar
   function handleFileSelect(files) {
