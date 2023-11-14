@@ -115,83 +115,26 @@
                 <label for="inputPrice">Service Price</label>
                 <input type="number" name="inputPrice" id="inputPrice" class="form-control">
               </div>
-
-          <div class="row">
-          <div class="col-md-12">
-            <div class="card card-default">
-              <div class="card-header">
-                <h3 class="card-title">Upload Image</h3>
-              </div>
-              <div class="card-body">
-                <div id="actions" class="row">
-                  <div class="col-lg-6">
-                    <div class="btn-group w-100">
-                      <span class="btn btn-success col fileinput-button">
-                        <i class="fas fa-plus"></i>
-                        <span>Add files</span>
-                      </span>
-                      <button type="submit" class="btn btn-primary col start">
-                        <i class="fas fa-upload"></i>
-                        <span>Start upload</span>
-                      </button>
-                      <button type="reset" class="btn btn-warning col cancel">
-                        <i class="fas fa-times-circle"></i>
-                        <span>Cancel upload</span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 d-flex align-items-center">
-                    <div class="fileupload-process w-100">
-                      <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="table table-striped files" id="previews">
-                  <div id="template" class="row mt-2">
-                    <div class="col-auto">
-                        <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
-                    </div>
-                    <div class="col d-flex align-items-center">
-                        <p class="mb-0">
-                          <span class="lead" data-dz-name></span>
-                          (<span data-dz-size></span>)
-                        </p>
-                        <strong class="error text-danger" data-dz-errormessage></strong>
-                    </div>
-                    <div class="col-4 d-flex align-items-center">
-                        <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                          <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                        </div>
-                    </div>
-                    <div class="col-auto d-flex align-items-center">
-                      <div class="btn-group">
-                        <button class="btn btn-primary start">
-                          <i class="fas fa-upload"></i>
-                          <span>Start</span>
-                        </button>
-                        <button data-dz-remove class="btn btn-warning cancel">
-                          <i class="fas fa-times-circle"></i>
-                          <span>Cancel</span>
-                        </button>
-                        <button data-dz-remove class="btn btn-danger delete">
-                          <i class="fas fa-trash"></i>
-                          <span>Delete</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- /.card-body -->
-              <!-- <div class="card-footer">
-                Visit <a href="https://www.dropzonejs.com">dropzone.js documentation</a> for more examples and information about the plugin.
-              </div> -->
-            </div>
-            <!-- /.card -->
-          </div>
+              <!-- upload image button -->
+              <div class="form-group">
+<div style="display: flex; align-items: center;">
+  <div style="flex-grow: 1;">
+    <div class="form-group">
+      <label for="inputFile">Service Image</label>
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" name="inputFile" id="inputFile" class="custom-file-input">
+          <label class="custom-file-label" for="inputFile" id="fileNameDisplay">Choose file</label>
         </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <img id="imagePreview" style="max-width: 200px; max-height: 200px; margin-left: 10px;" />
+  </div>
+</div>
+
+
               <div class="row">
               <div class="form-group col-md-2">
                 <!-- service time start in hour -->
@@ -233,6 +176,36 @@
 <!-- jQuery UI 1.11.4 -->
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  // Fungsi untuk menampilkan nama file yang dipilih dan preview gambar
+  function handleFileSelect() {
+    var fileInput = document.getElementById('inputFile');
+    var fileNameDisplay = document.getElementById('fileNameDisplay');
+    var imagePreview = document.getElementById('imagePreview');
+
+    // Pastikan file yang dipilih adalah gambar
+    if (fileInput.files[0] && fileInput.files[0].type.startsWith('image/')) {
+      // Menampilkan nama file yang dipilih
+      fileNameDisplay.textContent = fileInput.files[0].name;
+
+      // Menampilkan preview gambar
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        imagePreview.src = e.target.result;
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+    } else {
+      // Jika bukan gambar, atur nama file dan preview menjadi kosong
+      fileNameDisplay.textContent = 'Choose file';
+      imagePreview.src = '';
+    }
+  }
+
+  // Menambahkan event listener untuk mengaktifkan fungsi di atas saat ada perubahan pada input file
+  document.getElementById('inputFile').addEventListener('change', handleFileSelect);
+</script>
+
+
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -281,6 +254,7 @@
     document.querySelector("#total-progress").style.opacity = "1"
     // And disable the start button
     file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+    
   })
 
   // Hide the total progress bar when nothing's uploading anymore
