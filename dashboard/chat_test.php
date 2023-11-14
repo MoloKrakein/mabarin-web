@@ -173,15 +173,17 @@
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
-    apiKey: "AIzaSyDwmggIXG-wHw8zclFje9-QI8KHkNaQqd4",
-    authDomain: "mabarin-c1d84.firebaseapp.com",
-    projectId: "mabarin-c1d84",
-    storageBucket: "mabarin-c1d84.appspot.com",
-    databaseURL: "https://mabarin-c1d84-default-rtdb.asia-southeast1.firebasedatabase.app",
-    messagingSenderId: "148935883756",
-    appId: "1:148935883756:web:f1f48b0d2968e17fd79ec9",
-    measurementId: "G-QS11PTV9JY"
-  };
+apiKey: "AIzaSyDwmggIXG-wHw8zclFje9-QI8KHkNaQqd4",
+authDomain: "mabarin-c1d84.firebaseapp.com",
+databaseURL: "https://mabarin-c1d84-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "mabarin-c1d84",
+storageBucket: "mabarin-c1d84.appspot.com",
+messagingSenderId: "148935883756",
+appId: "1:148935883756:web:f1f48b0d2968e17fd79ec9",
+measurementId: "G-QS11PTV9JY"
+
+};
+
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -189,57 +191,46 @@
   const db = getDatabase(app);
 
   submit.addEventListener('click', (e) => {
-    e.preventDefault();
-    var message = document.getElementById('message').value;
-    var name = 'pembeli'
-    var time = document.getElementById('time').value;
+  e.preventDefault();
+  var message = document.getElementById('message').value;
+  var sender = 'pembeli';
+  var receiver = 'penerima';
+  var time = document.getElementById('time').value;
 
-    const id = push(child(ref(db), 'chat')).key;
-    set(ref(db, 'chat/' + id), {
-      name: name,
-      message: message,
-      time: time
-    });
-    // alert('Message sent!');
-    document.getElementById('message').value = '';
-
+  const newChatRef = push(ref(db, `chats/${sender}/${receiver}`));
+  set(newChatRef, {
+    name: name,
+    message: message,
+    time: time
   });
 
-  const newMsg = ref(db, 'chat/');
+  document.getElementById('message').value = '';
+});
 
-  onChildAdded(newMsg, (snapshot) => {
-    const data = snapshot.val();
-    const time = moment(data.time, "YYYY-MM-DD HH:mm:ss");
-    const formattedTime = time.format("MMM D, YYYY h:mm A");
+const sender = 'pembeli';  // Ganti dengan variabel atau nilai sesuai kebutuhan
+const receiver = 'penerima';  // Ganti dengan variabel atau nilai sesuai kebutuhan
+const chatRef = ref(db, `chats/pembeli/penerima`);
 
-    if(snapshot.val().name == 'pembeli'){
-      $('.direct-chat-messages').append(
-        '<div class="direct-chat-msg right">'+
-          '<div class="direct-chat-infos clearfix">'+
-            '<span class="direct-chat-name float-right">'+data.name+'</span>'+
-            '<span class="direct-chat-timestamp float-left">'+formattedTime+'</span>'+
-          '</div>'+
-          '<img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="Message User Image">'+
-          '<div class="direct-chat-text">'+
-            data.message+
-          '</div>'+
-        '</div>'
-      );
-    }else{
-      $('.direct-chat-messages').append(
-        '<div class="direct-chat-msg">'+
-          '<div class="direct-chat-infos clearfix">'+
-            '<span class="direct-chat-name float-left">'+data.name+'</span>'+
-            '<span class="direct-chat-timestamp float-right">'+formattedTime+'</span>'+
-          '</div>'+
-          '<img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">'+
-          '<div class="direct-chat-text">'+
-            data.message+
-          '</div>'+
-        '</div>'
-      );
-    }
-  });
+onChildAdded(chatRef, (snapshot) => {
+  const data = snapshot.val();
+  console.log(`pesan baru dari ${data.sender} ke ${data.receiver} : ${data.message}`);
+  // Tambahkan logika untuk menampilkan pesan di frontend
+  const formattedTime = moment(data.time, "YYYY-MM-DD HH:mm:ss").format("MMM D, YYYY h:mm A");
+
+  // Tambahkan logika untuk menampilkan pesan di frontend
+  $('.direct-chat-messages').append(
+    `<div class="direct-chat-msg">
+      <div class="direct-chat-infos clearfix">
+        <span class="direct-chat-name float-left">${data.sender}</span>
+        <span class="direct-chat-timestamp float-right">${formattedTime}</span>
+      </div>
+      <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">
+      <div class="direct-chat-text">${data.message}</div>
+    </div>`
+  );
+});
+
+
 
 console.log("Firebase connected successfully!");
 </script>

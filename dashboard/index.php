@@ -92,9 +92,18 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['vendor'])) {
             <!-- small card -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>150</h3>
+                <h3><?php
+                require_once 'config.php';
+                $vendor_id = $_SESSION['vendor_id'];
+                $sql = "SELECT * FROM order_view WHERE vendor_id = $vendor_id";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+                $count = mysqli_num_rows($result);
+                echo $count;
+                
+                ?></h3>
 
-                <p>New Orders</p>
+                <p>Orders</p>
               </div>
               <div class="icon">
                 <i class="fas fa-shopping-cart"></i>
@@ -104,7 +113,7 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['vendor'])) {
               </a>
             </div>
           </div>
-            <div class="col-lg-3 col-6">
+          <div class="col-lg-3 col-6">
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
@@ -128,6 +137,23 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['vendor'])) {
               </div>
               <a href="service_create.php" class="small-box-footer">
                 Create Service <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>
+                  2
+                </h3>
+                <p>Chats</p>
+              </div>
+              <div class="icon">
+              <i class="fas fa-comments"></i>
+              </div>
+              <a href="service_create.php" class="small-box-footer">
+                Check Chats <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
           </div>
