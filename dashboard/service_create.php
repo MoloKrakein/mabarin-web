@@ -91,7 +91,7 @@
                 </button>
               </div>
             </div>
-            <form action="service_create_process.php" method="post">
+            <form action="service_create_process.php" method="post" enctype="multipart/form-data">
               <input type="hidden" name="inputVendorId" value="<?php echo $_SESSION['vendor_id']; ?>">
             <div class="card-body">
               <div class="form-group">
@@ -123,8 +123,8 @@
       <label for="inputFile">Service Image</label>
       <div class="input-group">
         <div class="custom-file">
-          <input type="file" name="inputFile" id="inputFile" class="custom-file-input">
-          <label class="custom-file-label" for="inputFile" id="fileNameDisplay">Choose file</label>
+          <input type="file" name="inputFile" id="inputFile" class="custom-file-input" accept="image/*">
+          <label class="custom-file-label" for="inputFile" id="fileNameDisplay">Choose Image or Drop Here</label>
         </div>
       </div>
     </div>
@@ -178,31 +178,52 @@
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   // Fungsi untuk menampilkan nama file yang dipilih dan preview gambar
-  function handleFileSelect() {
+  function handleFileSelect(files) {
     var fileInput = document.getElementById('inputFile');
     var fileNameDisplay = document.getElementById('fileNameDisplay');
     var imagePreview = document.getElementById('imagePreview');
 
     // Pastikan file yang dipilih adalah gambar
-    if (fileInput.files[0] && fileInput.files[0].type.startsWith('image/')) {
+    if (files[0] && files[0].type.startsWith('image/')) {
       // Menampilkan nama file yang dipilih
-      fileNameDisplay.textContent = fileInput.files[0].name;
+      fileNameDisplay.textContent = files[0].name;
 
       // Menampilkan preview gambar
       var reader = new FileReader();
       reader.onload = function (e) {
         imagePreview.src = e.target.result;
       };
-      reader.readAsDataURL(fileInput.files[0]);
+      reader.readAsDataURL(files[0]);
     } else {
       // Jika bukan gambar, atur nama file dan preview menjadi kosong
-      fileNameDisplay.textContent = 'Choose file';
+      fileNameDisplay.textContent = 'Choose file or Drop';
       imagePreview.src = '';
     }
   }
 
   // Menambahkan event listener untuk mengaktifkan fungsi di atas saat ada perubahan pada input file
-  document.getElementById('inputFile').addEventListener('change', handleFileSelect);
+  document.getElementById('inputFile').addEventListener('change', function (e) {
+    handleFileSelect(e.target.files);
+  });
+
+  // Menambahkan event listener untuk menangani drop file
+  document.body.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  document.body.addEventListener('drop', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Menangani file yang di-drop
+    handleFileSelect(e.dataTransfer.files);
+  });
+
+  // Menambahkan event listener untuk mengaktifkan input file saat label diklik
+  document.getElementById('fileNameDisplay').addEventListener('click', function () {
+    document.getElementById('inputFile').click();
+  });
 </script>
 
 

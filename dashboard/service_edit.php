@@ -99,7 +99,7 @@
               $result = $conn->query($sql);
               $service = $result->fetch_assoc();
             ?>
-            <form action="service_edit_process.php" method="post">
+            <form action="service_edit_process.php" method="post" enctype="multipart/form-data">
               <input type="hidden" name="inputServiceId" value="<?php echo $service['service_id']; ?>">
               <input type="hidden" name="inputVendorId" value="<?php echo $_SESSION['vendor_id']; ?>">
             <div class="card-body">
@@ -124,6 +124,22 @@
                 <label for="inputPrice">Service Price</label>
                 <input type="number" name="inputPrice" id="inputPrice" class="form-control" value="<?php echo $service['service_price']; ?>">
               </div>
+              <div style="display: flex; align-items: center;">
+  <div style="flex-grow: 1;">
+    <div class="form-group">
+      <label for="inputFile">Service Image</label>
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" name="inputFile" id="inputFile" class="custom-file-input" accept="image/*" style="display: none;">
+          <label class="custom-file-label" for="inputFile" id="fileNameDisplay">Choose file</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <img id="imagePreview" style="max-width: 200px; max-height: 200px; margin-left: 10px;" />
+  </div>
+</div>
               <div class="row">
               <div class="form-group col-md-2">
                 <!-- service time start in hour -->
@@ -179,6 +195,69 @@
         $("#footer").load("footer.php");
     })
 
+</script>
+<script>
+  // Fungsi untuk menampilkan nama file yang dipilih dan preview gambar
+  function handleFileSelect(files) {
+    var fileInput = document.getElementById('inputFile');
+    var fileNameDisplay = document.getElementById('fileNameDisplay');
+    var imagePreview = document.getElementById('imagePreview');
+
+    // Pastikan file yang dipilih adalah gambar
+    if (files[0] && files[0].type.startsWith('image/')) {
+      // Menampilkan nama file yang dipilih
+      fileNameDisplay.textContent = files[0].name;
+
+      // Menampilkan preview gambar
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        imagePreview.src = e.target.result;
+      };
+      reader.readAsDataURL(files[0]);
+    } else {
+      // Jika bukan gambar, atur nama file dan preview menjadi kosong
+      fileNameDisplay.textContent = 'Choose file';
+      imagePreview.src = '';
+    }
+  }
+
+  // Menambahkan event listener untuk mengaktifkan fungsi di atas saat ada perubahan pada input file
+  document.getElementById('inputFile').addEventListener('change', function (e) {
+    handleFileSelect(e.target.files);
+  });
+
+  // Menambahkan event listener untuk menangani drop file
+  document.body.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  document.body.addEventListener('drop', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Menangani file yang di-drop
+    handleFileSelect(e.dataTransfer.files);
+  });
+
+  // Menambahkan event listener untuk mengaktifkan input file saat label diklik
+  document.getElementById('fileNameDisplay').addEventListener('click', function () {
+    document.getElementById('inputFile').click();
+  });
+  <?php
+  // Mendapatkan nama file gambar default
+  $yourDefaultImageFileName = "";
+  if (!empty($service['detail_image'])) {
+    $yourDefaultImageFileName = $service['detail_image'];
+  }
+
+  ?>
+  // Menampilkan data gambar default
+  var defaultImageFileName = "<?php echo $yourDefaultImageFileName; ?>";
+  if (defaultImageFileName) {
+    fileNameDisplay.textContent = defaultImageFileName;
+    imagePreview.src = "uploads/" + defaultImageFileName;
+  }
 </script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
