@@ -5,6 +5,7 @@ session_start();
 $serviceName = $_POST["inputName"];
 $serviceDescription = $_POST["inputDescription"];
 $gameCategory = $_POST["inputGame"];
+$serviceType = $_POST["inputServiceType"];
 $servicePrice = $_POST["inputPrice"];
 $serviceStart = $_POST["inputHourStart"];
 $serviceEnd = $_POST["inputHourEnd"];
@@ -15,8 +16,14 @@ $vendorId = $_SESSION['vendor_id'];
 // Variabel untuk menyimpan nama file gambar baru
 $newImageFileName = "";
 
-// Memeriksa apakah gambar diunggah
+// Memeriksa apakah gambar baru diunggah
 if (!empty($_FILES["inputFile"]["name"])) {
+    // Hapus gambar lama jika ada
+    $oldImageFileName = $_POST["oldImageFileName"];
+    if (!empty($oldImageFileName)) {
+        unlink("uploads/" . $oldImageFileName);
+    }
+
     // Mendapatkan ekstensi file
     $fileExtension = pathinfo($_FILES["inputFile"]["name"], PATHINFO_EXTENSION);
 
@@ -34,13 +41,13 @@ if (!empty($_FILES["inputFile"]["name"])) {
     }
 }
 
-// Query SQL untuk menambahkan data service
-$sql = "INSERT INTO service (vendor_id, service_name, service_description, service_game, service_price, service_start_hour, service_end_hour, detail_image) 
-        VALUES ('$vendorId', '$serviceName', '$serviceDescription', '$gameCategory', '$servicePrice', '$serviceStart', '$serviceEnd', '$newImageFileName')";
+// Query SQL untuk menyimpan data service
+$sql = "INSERT INTO service (service_name, service_description, service_game, service_type, service_price, service_start_hour, service_end_hour, vendor_id, detail_image) 
+        VALUES ('$serviceName', '$serviceDescription', '$gameCategory', '$serviceType', '$servicePrice', '$serviceStart', '$serviceEnd', '$vendorId', '$newImageFileName')";
 
 // Jalankan query SQL
 if ($conn->query($sql) === TRUE) {
-    echo "Layanan berhasil ditambahkan";
+    echo "Data berhasil disimpan";
     header('Location: index.php');
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;

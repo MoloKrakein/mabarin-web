@@ -112,6 +112,21 @@
                 <input type="text" id="inputName" name="inputName" class="form-control" value="<?php echo $service['service_name']; ?>">
               </div>
               <div class="form-group">
+    <label for="inputServiceType">Service Type</label>
+    <select id="inputServiceType" name="inputServiceType" class="form-control custom-select">
+        <option selected="" disabled="">Select one</option>
+        <option value="duo" <?php if ($service['service_type'] == "duo") echo "selected"; ?>>Duo</option>
+        <option value="team" <?php if ($service['service_type'] == "team") echo "selected"; ?>>Team</option>
+        <option value="Full Coach" <?php if ($service['service_type'] == "Full Coach") echo "selected"; ?>>Full Coach</option>
+        <option value="Live Coach" <?php if ($service['service_type'] == "Live Coach") echo "selected"; ?>>Live Coach</option>
+        <option value="Online Coach" <?php if ($service['service_type'] == "Online Coach") echo "selected"; ?>>Online Coach</option>
+        <option value="duo casual" <?php if ($service['service_type'] == "duo casual") echo "selected"; ?>>Duo Casual</option>
+        <option value="team casual" <?php if ($service['service_type'] == "team casual") echo "selected"; ?>>Team Casual</option>
+        <option value="team vs team casual" <?php if ($service['service_type'] == "team vs team casual") echo "selected"; ?>>Team vs Team Casual</option>
+    </select>
+</div>
+
+              <div class="form-group">
                 <label for="inputDescription">Service Description</label>
                 <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4"><?php echo $service['service_description']; ?></textarea>
               </div>

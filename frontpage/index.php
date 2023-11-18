@@ -31,17 +31,25 @@ require_once "config.php";
                 <form class="d-flex" role="search">
                    <?php
                    session_start();
+
                    if (isset($_SESSION['email'])) {
                        echo '<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Profile">Profile</button>';
-                       if(isset($_SESSION['vendor'])){
+                       
+                       if (!isset($_SESSION['vendor'])) {
+                           // Tampilkan tombol Order hanya jika pengguna bukan vendor
+                           echo '<button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Order">Order</button>';
+                       }
+                   
+                       if (isset($_SESSION['vendor'])) {
                            echo '<a href="../dashboard/index.php" class="btn btn-warning ms-3">Dashboard</a>';
                        }
+                       
                        echo '<a href="logout.php" class="btn btn-danger ms-3">Log Out</a>';
                    } else {
                        echo '<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Sign_In">Sign Up</button>';
                        echo '<button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Log_In">Log In</button>';
                    }
-
+                   
                    ?>
                 </form>
             </div>

@@ -83,6 +83,21 @@
                 <label for="inputName">Service Name</label>
                 <input type="text" id="inputName" name="inputName" class="form-control">
               </div>
+
+              <div class="form-group">
+    <label for="inputServiceType">Service Type</label>
+    <select id="inputServiceType" name="inputServiceType" class="form-control custom-select">
+        <option selected="" disabled="">Select one</option>
+        <option value="duo">Duo</option>
+        <option value="team">Team</option>
+        <option value="Full Coach">Full Coach</option>
+        <option value="Live Coach">Live Coach</option>
+        <option value="Online Coach">Online Coach</option>
+        <option value="duo casual">Duo Casual</option>
+        <option value="team casual">Team Casual</option>
+        <option value="team vs team casual">Team vs Team Casual</option>
+    </select>
+</div>
               <div class="form-group">
                 <label for="inputDescription">Service Description</label>
                 <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4"></textarea>
