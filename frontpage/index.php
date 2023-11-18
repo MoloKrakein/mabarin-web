@@ -13,6 +13,9 @@ require_once "config.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Mabarin Apps</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -80,7 +83,7 @@ require_once "config.php";
                 <div style="border-top: 1px solid #FFF; width: 240px;"></div>
             </div>
             <div class="col-2">
-                <p class="text-center" style="color: #FF9212; font-size: 24px;">Pemilihan Mode</p>
+                <p class="text-center" style="color: #FF9212; font-size: 24px;">Pilihan Mode</p>
             </div>
             <div class="col-5 mt-3">
                 <div style="border-top: 1px solid #FFF;  width: 240px;"></div>
@@ -232,10 +235,7 @@ require_once "config.php";
             <div class="d-flex justify-content-center">
                 <button type="button" class="btn" style="background-color: #FAFF12; width: 15%;" data-bs-toggle="modal" data-bs-target="#service-list">
                     <p class="text-center mt-1" style="color: #141414; font-size: 20px; font-weight: 800;">Cari Teman</p>
-                    <!-- <div class="d-flex justify-content-center mt-1">
-                        <div style="border-top: 2px solid black; width: 220px;"></div>
-                    </div>
-                    <p class="text-center mt-2" style="color: #141414; font-size: 20px; font-weight: 800;">Rp. 1000</p> -->
+
                 </button>
             </div>
         </div>
@@ -403,28 +403,45 @@ while ($service = $result->fetch_assoc()) {
                     <div class="card-header text-muted border-bottom-0">
                         <!-- Anda perlu mengganti ini dengan data yang sesuai dari database -->
                         <?php echo $service['service_game']; ?>
+
                     </div>
-                    <div class="card-body pt-0">
-                        <h2 class="lead"><b><?php echo $service['service_name']; ?></b></h2>
+                    <div class="card-body">
+                        <h1 class="lead"><b><?php echo $service['service_name']; ?></b></h1>
+                        
                         <!-- <p class="text-muted text-sm"><b>About: </b> <?php echo $service['service_description']; ?> </p> -->
                         <ul class="ml-4 mb-0 fa-ul text-muted">
-                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-gamepad"></i></span> <?php echo "Price: " . $service['service_price']; ?></li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-gamepad"></i></span> <?php echo "Price: " . 'Rp ' . number_format($service['service_price'], 0, ',', '.'); ?></li>
+
                             <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span> <?php echo "Hours: " . $service['service_start_hour'] . " - " . $service['service_end_hour']; ?></li>
+                            <li class="small"><strong><?php echo ucfirst(strtolower($service['service_type'])); ?></strong></li>
+                            
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer">
-            <div class="text-right">
-                <a href="#" class="btn btn-sm bg-teal">
-                    <i class="fas fa-comments"></i>
-                </a>
-                <a href="#" class="btn btn-sm btn-primary">
-                    <i class="fas fa-user"></i> Check Detail
-                </a>
+                <!-- <div class="row align-items-center">
+                    <div class="col">
+                    <button class="btn btn-primary detail-service-btn" data-toggle="modal" data-target="#detailModal" data-service-id="<?php echo $service['service_id']; ?>">Detail</button>
+                    </div>
+                </div> -->
+                <?php
+                if (isset($_SESSION['email'])) {
+                    echo '<div class="row align-items-center">
+                    <div class="col">
+                    <button class="btn btn-primary detail-service-btn" data-toggle="modal" data-target="#detailModal" data-service-id="' . $service['service_id'] . '">Detail</button>
+                    </div> 
+                    </div>';
+                } else {
+                    echo '<div class="row align-items-center">
+                    <div class="col">
+                    <button class="btn btn-primary detail-service-btn" data-toggle="modal" data-target="#Log_In" data-service-id="' . $service['service_id'] . '">Detail</button>
+                    </div> 
+                    </div>';
+                }
+                ?>
             </div>
-        </div>
     </div>
 </div>
 
@@ -463,6 +480,18 @@ $conn->close();
     </div>
     </div>
 </div>
+<!-- Detail Service -->
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- Tempat untuk menampilkan konten modal detail -->
+        <div id="detailModalBody"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Daftar Vendor -->
 <div class="modal fade" id="vendor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -529,7 +558,26 @@ $conn->close();
         });
 
     </script> -->
-
+    <script>
+$(document).ready(function() {
+    // Tambahkan event handler untuk tombol "Detail" pada modal detail_service.php
+    $('.detail-service-btn').click(function() {
+        var service_id = $(this).data('service-id');
+        $.ajax({
+            url: 'get_detail_service.php',
+            type: 'POST',
+            data: { service_id: service_id },
+            success: function(response) {
+                // Tampilkan hasil dari AJAX di dalam modal
+                $('#detailModalBody').html(response);
+            },
+            error: function() {
+                alert('Error while fetching service details.');
+            }
+        });
+    });
+});
+</script>
 
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
