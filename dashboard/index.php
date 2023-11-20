@@ -140,23 +140,7 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['vendor'])) {
               </a>
             </div>
           </div>
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>
-                  2
-                </h3>
-                <p>Chats</p>
-              </div>
-              <div class="icon">
-              <i class="fas fa-comments"></i>
-              </div>
-              <a href="service_create.php" class="small-box-footer">
-                Check Chats <i class="fas fa-arrow-circle-right"></i>
-              </a>
-            </div>
-          </div>
+       
         </div>
         <!-- /.card row -->
         <div class="row">
@@ -194,7 +178,7 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['vendor'])) {
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                       while($row = $result->fetch_assoc()) {
-                        echo "<tr><td>" . $row["email"] . "</td><td>" . $row["service_name"] . "</td><td>" . $row["order_date"] . "</td><td>" . $row["status"] . "</td><td><a href='order_detail.php?order_id=" . $row["order_id"] . "'>Detail</a></td></tr>";
+                        echo "<tr><td>" . $row["customer_email"] . "</td><td>" . $row["service_name"] . "</td><td>" . $row["order_date"] . "</td><td>" . $row["status"] . "</td><td><a href='order_detail.php?order_id=" . $row["order_id"] . "'>Detail</a></td></tr>";
                       }
                       
                     }else{

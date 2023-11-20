@@ -14,7 +14,7 @@ if (isset($_POST['service_id']) && isset($_SESSION['customer_id'])) {
     $service_id = $_POST['service_id'];
     $customer_id = $_SESSION['customer_id'];
     $order_date = date('Y-m-d');
-    $description = "New order for service ID: $service_id";
+    $description = "";
     $status = "Pending";
 
     // Query SQL untuk insert ke tabel order_service
@@ -23,6 +23,7 @@ if (isset($_POST['service_id']) && isset($_SESSION['customer_id'])) {
 
     if ($conn->query($sql) === TRUE) {
         echo "Order berhasil diproses.";
+        header("Location: index.php");
     } else {
         echo "Error while processing order.";
     }
