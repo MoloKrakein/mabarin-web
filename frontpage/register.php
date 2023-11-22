@@ -13,6 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "Email already exists!";
     exit;
   }
+  $sql = "SELECT * FROM vendor WHERE email = '$email'";
+  $result = $conn->query($sql);
+  if ($result->num_rows > 0) {
+    echo "Email already exists!";
+    exit;
+  }
 
   // Hash the password for security
   $hashed_password = md5($password);

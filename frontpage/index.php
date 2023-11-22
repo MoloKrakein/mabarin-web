@@ -36,7 +36,7 @@ require_once "config.php";
                    session_start();
 
                    if (isset($_SESSION['email'])) {
-                       echo '<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Profile">Profile</button>';
+                    //    echo '<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Profile">Profile</button>';
                        
                        if (!isset($_SESSION['vendor'])) {
                            // Tampilkan tombol Order hanya jika pengguna bukan vendor
@@ -366,157 +366,161 @@ require_once "config.php";
     </div>
 </div>
 <!-- service-list -->
+<!-- Service List Modal -->
 <div class="modal fade" id="service-list" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content container-fluid" style="background-color: #141414; color: #ffffff; margin: 0; padding: 0;">
+        <div class="modal-content container-fluid" style="background-color: #141414; color: #ffffff; margin: 0; padding: 0;">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Cari Teman</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #FAFF12; background-color: #FAFF12"></button>
             </div>
             <div class="modal-body" style="overflow-y: auto;">
-            <div class="row">
+                <div class="row">
+                    <?php
+                    // Sesuaikan ini dengan koneksi ke database Anda
+                    include "config.php";
+
+                    // Query SQL untuk mengambil data dari service_view
+                    $sql = "SELECT * FROM service_view";
+                    $result = $conn->query($sql);
+
+                    // Cek apakah hasil query kosong
+                    if ($result->num_rows > 0) {
+                        // Loop untuk setiap layanan
+                        while ($service = $result->fetch_assoc()) {
+                            ?>
+                            <!-- Konten kartu service -->
+                            <div class="col-12 col-sm-6 col-md-4 mb-3">
+                                <div class="card bg-light d-flex flex-fill">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-5 text-center">
+                                                <!-- Anda dapat mengganti sumber gambar dengan nilai yang sesuai dari database -->
+                                                <img src="../dashboard/uploads/<?php echo basename($service['detail_image']); ?>" alt="" class="img-circle img-fluid" style="height: 150px; width: auto;">
+                                            </div>
+                                            <div class="col-7">
+                                                <div class="card-header text-muted border-bottom-0">
+                                                    <!-- Anda perlu mengganti ini dengan data yang sesuai dari database -->
+                                                    <?php echo $service['service_game']; ?>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h1 class="lead"><b><?php echo $service['service_name']; ?></b></h1>
+                                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                        <li class="small"><strong><?php echo ucfirst(strtolower($service['service_type'])); ?></strong></li>
+                                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-gamepad"></i></span> <?php echo "Price: " . 'Rp ' . number_format($service['service_price'], 0, ',', '.'); ?></li>
+                                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span> <?php echo "Hours: " . $service['service_start_hour'] . " - " . $service['service_end_hour']; ?></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <?php
+                                        if (isset($_SESSION['email'])) {
+                                            echo '<div class="row align-items-center">
+                                                <div class="col">
+                                                    <button class="btn btn-primary detail-service-btn" data-toggle="modal" data-target="#detailModal" data-service-id="' . $service['service_id'] . '">Detail</button>
+                                                </div> 
+                                            </div>';
+                                        } else {
+                                            echo '<div class="row align-items-center">
+                                                <div class="col">
+                                                    <button data-bs-dismiss="modal" class="btn btn-primary  detail-service-btn" data-toggle="modal" data-target="#Log_In" data-service-id="' . $service['service_id'] . '">Login</button>
+                                                </div> 
+                                            </div>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        // Jika hasil query kosong, tampilkan pesan
+                        echo '<div class="col-12 text-center">
+                                <h1>Yahh Tunggu Masih Belum Ada Service yang Ada :(</h1>
+                              </div>';
+                    }
+
+                    // Tutup koneksi
+                    $conn->close();
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Order Modal -->
 <?php
 // Sesuaikan ini dengan koneksi ke database Anda
 include "config.php";
 
-// Query SQL untuk mengambil data dari service_view
-$sql = "SELECT * FROM service_view";
-$result = $conn->query($sql);
-
-// Loop untuk setiap layanan
-while ($service = $result->fetch_assoc()) {
-?>
-    <div class="col-12 col-sm-6 col-md-4 mb-3">
-      <div class="card bg-light d-flex flex-fill">
-        <div class="card-body">
-            <div class="row align-items-center">
-                <div class="col-5 text-center">
-                    <!-- Anda dapat mengganti sumber gambar dengan nilai yang sesuai dari database -->
-                    <img src="../dashboard/uploads/<?php echo basename($service['detail_image']); ?>" alt="" class="img-circle img-fluid" style="height: 100px; width: auto;">
-
+// Pengecekan apakah pengguna sudah login
+if (isset($_SESSION['customer_id'])) {
+    // Jika sudah login, tampilkan modal
+    ?>
+    <div class="modal fade" id="Order" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content container-fluid" style="background-color: #141414; color: #ffffff; margin: 0; padding: 0;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><?php echo $_SESSION['email']?> Order List</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #FAFF12; background-color: #FAFF12"></button>
                 </div>
-                <div class="col-7">
-                    <div class="card-header text-muted border-bottom-0">
-                        <!-- Anda perlu mengganti ini dengan data yang sesuai dari database -->
-                        <?php echo $service['service_game']; ?>
+                <div class="modal-body" style="overflow-y: auto;">
+                    <div class="row">
+                        <?php
+                        // Query SQL untuk mengambil data dari order_view
+                        $sql = "SELECT * FROM order_view WHERE customer_id = " . $_SESSION['customer_id'];
+                        $result = $conn->query($sql);
 
-                    </div>
-                    <div class="card-body">
-                        <h1 class="lead"><b><?php echo $service['service_name']; ?></b></h1>
-                        
-                        <!-- <p class="text-muted text-sm"><b>About: </b> <?php echo $service['service_description']; ?> </p> -->
-                        <ul class="ml-4 mb-0 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-gamepad"></i></span> <?php echo "Price: " . 'Rp ' . number_format($service['service_price'], 0, ',', '.'); ?></li>
-
-                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span> <?php echo "Hours: " . $service['service_start_hour'] . " - " . $service['service_end_hour']; ?></li>
-                            <li class="small"><strong><?php echo ucfirst(strtolower($service['service_type'])); ?></strong></li>
-                            
-                        </ul>
+                        // Loop untuk setiap layanan
+                        while ($service = $result->fetch_assoc()) {
+                            ?>
+                            <!-- Konten kartu service -->
+                            <div class="col-12 col-sm-6 col-md-4 mb-3">
+                                <div class="card bg-light d-flex flex-fill">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-5 text-center">
+                                                <!-- Anda dapat mengganti sumber gambar dengan nilai yang sesuai dari database -->
+                                                <img src="../dashboard/uploads/<?php echo basename($service['detail_image']); ?>" alt="" class="img-circle img-fluid" style="height: 100px; width: auto;">
+                                            </div>
+                                            <div class="col-7">
+                                                <div class="card-header text-muted border-bottom-0">
+                                                    <!-- Anda perlu mengganti ini dengan data yang sesuai dari database -->
+                                                    <?php echo $service['service_game']; ?>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h1 class="lead"><b><?php echo $service['service_name']; ?></b></h1>
+                                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span> <?php echo "Hours: " . $service['service_start_hour'] . " - " . $service['service_end_hour']; ?></li>
+                                                        <li class="small"><strong><?php echo ucfirst(strtolower($service['service_type'])); ?></strong></li>
+                                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-gamepad"></i></span> <?php echo "Description: " . $service['order_description']; ?></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button class="btn btn-primary detail-service-btn"><?php echo $service['status']?></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        // Tutup koneksi
+                        $conn->close();
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card-footer">
-                <?php
-                if (isset($_SESSION['email'])) {
-                    echo '<div class="row align-items-center">
-                    <div class="col">
-                    <button class="btn btn-primary detail-service-btn" data-toggle="modal" data-target="#detailModal" data-service-id="' . $service['service_id'] . '">Detail</button>
-                    </div> 
-                    </div>';
-                } else {
-                    echo '<div class="row align-items-center">
-                    <div class="col">
-                    <button data-bs-dismiss="modal" class="btn btn-primary  detail-service-btn" data-toggle="modal" data-target="#Log_In" data-service-id="' . $service['service_id'] . '">Login</button>
-                    </div> 
-                    </div>';
-                }
-                ?>
-            </div>
     </div>
-</div>
-
-<?php
+    <?php
 }
-// Tutup koneksi
-$conn->close();
 ?>
-      </div>
-            </div>
-        </div>
-    </div>
-    </div>
-</div>
 
-<!-- Order -->
-
-<div class="modal fade" id="Order" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content container-fluid" style="background-color: #141414; color: #ffffff; margin: 0; padding: 0;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cari Teman</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #FAFF12; background-color: #FAFF12"></button>
-            </div>
-            <div class="modal-body" style="overflow-y: auto;">
-            <div class="row">
-<?php
-// Sesuaikan ini dengan koneksi ke database Anda
-include "config.php";
-
-// Query SQL untuk mengambil data dari service_view
-$sql = "SELECT * FROM order_view WHERE customer_id = " . $_SESSION['customer_id'];
-$result = $conn->query($sql);
-
-// Loop untuk setiap layanan
-while ($service = $result->fetch_assoc()) {
-?>
-    <div class="col-12 col-sm-6 col-md-4 mb-3">
-      <div class="card bg-light d-flex flex-fill">
-        <div class="card-body">
-            <div class="row align-items-center">
-                <div class="col-5 text-center">
-                    <!-- Anda dapat mengganti sumber gambar dengan nilai yang sesuai dari database -->
-                    <img src="../dashboard/uploads/<?php echo basename($service['detail_image']); ?>" alt="" class="img-circle img-fluid" style="height: 100px; width: auto;">
-
-                </div>
-                <div class="col-7">
-                    <div class="card-header text-muted border-bottom-0">
-                        <!-- Anda perlu mengganti ini dengan data yang sesuai dari database -->
-                        <?php echo $service['service_game']; ?>
-
-                    </div>
-                    <div class="card-body">
-                        <h1 class="lead"><b><?php echo $service['service_name']; ?></b></h1>
-                        
-                        <!-- <p class="text-muted text-sm"><b>About: </b> <?php echo $service['service_description']; ?> </p> -->
-                        <ul class="ml-4 mb-0 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-gamepad"></i></span> <?php echo "Description: " . $service['order_description']; ?></li>
-
-                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span> <?php echo "Hours: " . $service['service_start_hour'] . " - " . $service['service_end_hour']; ?></li>
-                            <li class="small"><strong><?php echo ucfirst(strtolower($service['service_type'])); ?></strong></li>
-                            
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-footer">
-        <button class="btn btn-primary detail-service-btn"><?php echo $service['status']?></button>
-            </div>
-    </div>
-</div>
-
-<?php
-}
-// Tutup koneksi
-$conn->close();
-?>
-      </div>
-            </div>
-        </div>
-    </div>
-    </div>
-</div>
 <!-- Detail Service -->
 <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" style="">

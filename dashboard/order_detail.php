@@ -141,8 +141,7 @@
     </div>
     <div class="form-group">
               <label for="inputDescriptionOrder">Order Description</label>
-              <textarea id="inputDescriptionOrder" name="inputDescriptionOrder" class="form-control" rows="4"  placeholder="<?php echo $order['order_description']; ?>">
-              </textarea>
+              <textarea id="inputDescriptionOrder" name="inputDescriptionOrder" class="form-control" rows="4"  placeholder="<?php echo $order['order_description'];?>"></textarea>
     </div>
             <!-- Button clear and submit -->
             <div class="row">
