@@ -64,20 +64,28 @@ require_once "config.php";
 
     <div class="container">
         <div class="d-flex flex justify-content-center">
-            <div id="carouselImg" class="carousel slide carousel-fade">
-                <div class="carousel-inner">
+            <div id="carouselId" class="carousel slide" data-bs-ride="carousel" display: flex; flex-direction: row; margin-bottom: 10px;">
+                <ol class="carousel-indicators">
+                    <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active" aria-current="true" aria-label="First slide"></li>
+                    <li data-bs-target="#carouselId" data-bs-slide-to="1" aria-label="Second slide"></li>
+                    <li data-bs-target="#carouselId" data-bs-slide-to="2" aria-label="Third slide"></li>
+                </ol>
+                <div class="carousel-inner" role="listbox">
                     <div class="carousel-item active">
-                        <img src="assets/game_lists.png" class="d-block w-70" alt="...">
+                        <img src="assets/MobileLegend.svg" class="w-10" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                        <img src="assets/valo.png" class="d-block w-70" alt="...">
+                        <img src="assets/FreeFire.svg" class="w-10" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="assets/Valorant.svg" class="w-10" alt="Third slide">
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselImg" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselImg" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
@@ -96,9 +104,11 @@ require_once "config.php";
             </div>
         </div>
 
-        <div class="row">
+        <form method="post" class="row" id="form1">
+            <!-- <div class="row"> -->
             <div class="col mt-5">
                 <div class="card border border-0" style="background-color: #141414;">
+
                     <div class="card-body">
                         <h5 class="card-title text-light text-center">Kompetitif</h5>
                         <div class="d-flex justify-content-center mt-4">
@@ -151,6 +161,7 @@ require_once "config.php";
                             <div style="border-top: 1px solid #535353; width: 240px;"></div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="col mt-5">
@@ -265,8 +276,9 @@ require_once "config.php";
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
 
+        <!-- </div> -->
         <div class="row mt-3">
             <div class="d-flex justify-content-center">
                 <div style="border-top: 1px solid #FFF; width: 220px;"></div>
@@ -275,11 +287,131 @@ require_once "config.php";
         <div class="row mt-3">
             <div class="d-flex justify-content-center">
                 <!-- <button type="button" class="btn" style="background-color: #FAFF12; width: 15%;" data-bs-toggle="modal" data-bs-target="#service-list">
-                    <p class="text-center" style="color: #141414; font-size: integrity; font-weight: 800;">Cari Teman</p>
-                </button> -->
-                <button type="button" class="btn btn-lg" style="background-color: #FAFF12; color: #141414; font-weight: bolder" data-bs-toggle="modal" data-bs-target="#service-list">Cari Teman</button>
+                        <p class="text-center" style="color: #141414; font-size: integrity; font-weight: 800;">Cari Teman</p>
+                    </button> -->
+                <button type="submit" form="form1" class="btn btn-lg" style="background-color: #FAFF12; color: #141414; font-weight: bolder ; margin-bottom:40px;" data-bs-toggle="modal" data-bs-target="#service-list">Cari Teman</button>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <!-- <script>
+                    $(document).ready(function() {
+                        // Cek apakah ada posisi scroll yang disimpan
+                        if (localStorage.getItem('scrollPosition')) {
+                            // Mengembalikan posisi scroll ke posisi yang disimpan
+                            $(window).scrollTop(localStorage.getItem('scrollPosition'));
+                            // Hapus posisi scroll yang disimpan
+                            localStorage.removeItem('scrollPosition');
+                        }
+
+                        $('#form1').on('submit', function(e) {
+                            // e.preventDefault();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: $(this).attr('action'),
+                                data: $(this).serialize(),
+                                success: function(response) {
+                                    // Simpan posisi scroll saat ini
+                                    localStorage.setItem('scrollPosition', $(window).scrollTop());
+                                    // Muat ulang halaman
+                                    location.reload();
+                                }
+                            });
+                        });
+                    });
+                </script> -->
             </div>
         </div>
+
+        <!-- Service List Modal -->
+        <!-- <div class="modal fade" id="service-list" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+        <!-- <div class="modal-dialog modal-fullscreen"> -->
+        <!-- <div class="modal-content container-fluid" style="background-color: #141414; color: #ffffff; margin: 0; padding: 0;"> -->
+        <!-- <div class="modal-header"> -->
+        <!-- <h5 class="modal-title" id="exampleModalLabel">Cari Teman</h5> -->
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #FAFF12; background-color: #FAFF12"></button> -->
+        <!-- </div> -->
+        <div class="modal-body" style="overflow-y: auto; ">
+            <div class="row">
+                <?php
+                include 'serviceDetails.php';
+                if (isset($_POST['listGroupRadio'])) {
+                    $value = $_POST['listGroupRadio'];
+                    $services = getServiceDetails($value);
+                    if (count($services) > 0) {
+                        foreach ($services as $service) {
+                ?>
+                            <!-- Konten kartu service -->
+                            <div class="col-12 col-sm-6 col-md-4 mb-3">
+                                <div class="card bg-light d-flex flex-fill">
+                                    <div class="row align-items-center">
+                                        <div class="col-5 text-center">
+                                            <!-- Anda dapat mengganti sumber gambar dengan nilai yang sesuai dari database -->
+                                            <img src="<?php echo $service[0]; ?>" alt="" class="img-circle img-fluid" style="height: 150px; width: auto;">
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="card-header text-muted border-bottom-0">
+                                                <?php echo $service[1]; ?>
+                                            </div>
+                                            <div class="card-body">
+                                                <h1 class="lead"><b>
+                                                        <?php echo $service[2]; ?>
+                                                    </b></h1>
+                                                <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                    <li class="small"><strong>
+                                                            <?php echo $service[3]; ?>
+                                                        </strong></li>
+                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-gamepad"></i></span>
+                                                        <?php echo $service[4]; ?>
+                                                    </li>
+                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span>
+                                                        <?php echo $service[5]; ?>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <?php
+                                        if (isset($_SESSION['email'])) {
+                                            echo '<div class="row align-items-center">
+                                                    <div class="col-7">         
+                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Detail">Detail</button>
+                                                    </div> 
+                                            </div>';
+                                        } else {
+                                            echo '<div class="row align-items-center">
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Log_In">Login</button>
+                                                    </div> 
+                                            </div>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                <?php
+                        }
+                    } else {
+                        echo
+                        '<div class="col-12 text-center">
+                            <h1 style="color: white !important;">Yahh, Service tersebut belum tersedia :(</h1>
+                        </div>';
+                    }
+                }
+                ?>
+            </div>
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <script type="text/javascript" src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+
         <div class="row mt-3 ">
             <div class="d-flex justify-content-center mb-5">
                 <div style="border-top: 1px solid #FFF; width: 220px;"></div>
@@ -299,9 +431,14 @@ require_once "config.php";
         <!-- DESC -->
         <div class="row mt-5">
             <h3 class="text-center" style="color:#08D3FF;">Deskripsi</h3>
-            <p class="text-center text-white">Naikkan rank anda dengan bermain bersama teman, yang dapat anda cari disini pada berbagai macam game. Bermain bersama teman <br> dapat meningkatkan performa anda baik dalam segi koordinasi dan performa</p>
-            <p class="text-center text-white mt-3">Dimana setiap teman anda akan membantu anda dalam meraih goals yang anda inginkan seperti rank ataupun pengembangan skill anda</p>
-            <p class="text-center text-white mt-3 mb-5">Anda dapat mencari berbagai macam teman dari berbagai macam segi skill. Serta kamudapat mencari sesi coaching dari pemain-pemain yang sudah pro<br> atau sudah berpengalaman.</p>
+            <p class="text-center text-white">Naikkan rank anda dengan bermain bersama teman, yang dapat anda cari
+                disini pada berbagai macam game. Bermain bersama teman <br> dapat meningkatkan performa anda baik dalam
+                segi koordinasi dan performa</p>
+            <p class="text-center text-white mt-3">Dimana setiap teman anda akan membantu anda dalam meraih goals yang
+                anda inginkan seperti rank ataupun pengembangan skill anda</p>
+            <p class="text-center text-white mt-3 mb-5">Anda dapat mencari berbagai macam teman dari berbagai macam segi
+                skill. Serta kamudapat mencari sesi coaching dari pemain-pemain yang sudah pro<br> atau sudah
+                berpengalaman.</p>
         </div>
 
         <!-- WHY -->
@@ -347,7 +484,12 @@ require_once "config.php";
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                         <div class="accordion-body" style="color: #FFFFFF; background-color: #141414;">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate quibusdam sint repudiandae, sunt aliquam praesentium, nisi culpa consequuntur obcaecati, consectetur tempora temporibus voluptates fuga illum? Doloremque rerum eos sint eligendi mollitia dolore at, totam voluptas tenetur fuga fugit cupiditate temporibus harum, suscipit consequuntur nihil quis. Incidunt fugit, molestias nobis voluptatem aspernatur aut repudiandae dolor quibusdam sit ad earum, cumque dicta.
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate quibusdam sint
+                            repudiandae, sunt aliquam praesentium, nisi culpa consequuntur obcaecati, consectetur
+                            tempora temporibus voluptates fuga illum? Doloremque rerum eos sint eligendi mollitia dolore
+                            at, totam voluptas tenetur fuga fugit cupiditate temporibus harum, suscipit consequuntur
+                            nihil quis. Incidunt fugit, molestias nobis voluptatem aspernatur aut repudiandae dolor
+                            quibusdam sit ad earum, cumque dicta.
                         </div>
                     </div>
                 </div>
@@ -359,7 +501,12 @@ require_once "config.php";
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body" style="color: #FFFFFF; background-color: #141414;">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. In, itaque! In quaerat assumenda, beatae quas odit aliquam quisquam unde molestias distinctio animi excepturi mollitia nisi voluptate sint officiis. Natus iusto recusandae impedit! Porro eius voluptatem commodi dolore molestiae aliquam excepturi ab distinctio expedita facilis impedit, unde dolores molestias obcaecati fugiat voluptate. A veniam, aliquid excepturi quam porro officiis quaerat perspiciatis.
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. In, itaque! In quaerat assumenda,
+                            beatae quas odit aliquam quisquam unde molestias distinctio animi excepturi mollitia nisi
+                            voluptate sint officiis. Natus iusto recusandae impedit! Porro eius voluptatem commodi
+                            dolore molestiae aliquam excepturi ab distinctio expedita facilis impedit, unde dolores
+                            molestias obcaecati fugiat voluptate. A veniam, aliquid excepturi quam porro officiis
+                            quaerat perspiciatis.
                         </div>
                     </div>
                 </div>
@@ -371,7 +518,11 @@ require_once "config.php";
                     </h2>
                     <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body" style="color: #FFFFFF; background-color: #141414;">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quibusdam laboriosam culpa. Magnam sunt animi rerum dolorum itaque reiciendis delectus commodi sed hic cum accusamus mollitia, quos ratione, alias vel voluptates laborum aliquid facere, sapiente porro quae! Magni ut quidem, magnam similique voluptatibus amet consequatur tempore laborum quasi minus est culpa adipisci temporibus dignissimos eligendi. Voluptas facilis quam odio alias!
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quibusdam laboriosam culpa.
+                            Magnam sunt animi rerum dolorum itaque reiciendis delectus commodi sed hic cum accusamus
+                            mollitia, quos ratione, alias vel voluptates laborum aliquid facere, sapiente porro quae!
+                            Magni ut quidem, magnam similique voluptatibus amet consequatur tempore laborum quasi minus
+                            est culpa adipisci temporibus dignissimos eligendi. Voluptas facilis quam odio alias!
                         </div>
                     </div>
                 </div>
@@ -383,7 +534,12 @@ require_once "config.php";
                     </h2>
                     <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body" style="color: #FFFFFF; background-color: #141414;">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, quis quisquam, rem quos perferendis ratione quo ad laudantium a doloremque eveniet aliquid, reiciendis harum. Rem in voluptate reiciendis accusamus, quod velit repellendus possimus eligendi culpa dolores modi at fugit veniam. Voluptatem magnam quas, repudiandae magni praesentium ipsam molestias pariatur quae aliquid dolor vitae aut? Ducimus officia voluptates laudantium reprehenderit quaerat.
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, quis quisquam, rem quos
+                            perferendis ratione quo ad laudantium a doloremque eveniet aliquid, reiciendis harum. Rem in
+                            voluptate reiciendis accusamus, quod velit repellendus possimus eligendi culpa dolores modi
+                            at fugit veniam. Voluptatem magnam quas, repudiandae magni praesentium ipsam molestias
+                            pariatur quae aliquid dolor vitae aut? Ducimus officia voluptates laudantium reprehenderit
+                            quaerat.
                         </div>
                     </div>
                 </div>
@@ -425,7 +581,7 @@ require_once "config.php";
             <div class="modal-content">
                 <div class="modal-body">
                     <h4 class="text-center">Selamat Datang Di Mabarin</h4>
-                    <h5 class="text-center" style="font-weight: 400;">Belum memiliki akun? <a style="font-weight: 400;">Sign In</a></h5>
+                    <h5 class="text-center" style="font-weight: 400;">Belum memiliki akun? <a class="btn btn-link" style="font-weight: 600;" data-bs-toggle="modal" data-bs-target="#Sign_In">Sign Up</a></h5>
                     <form action="login.php" method="post">
                         <div class="input-group mb-3 mt-5 container">
                             <input id="login-email" type="text" class="form-control" placeholder="Email" name="email" aria-label="Username" aria-describedby="basic-addon1">
@@ -448,7 +604,7 @@ require_once "config.php";
             <div class="modal-content">
                 <div class="modal-body">
                     <h4 class="text-center">Selamat Datang Di Mabarin</h4>
-                    <h5 class="text-center" style="font-weight: 400;">Sudah memiliki akun? <a style="font-weight: 400;">Log In</a></h5>
+                    <h5 class="text-center" style="font-weight: 400;">Sudah memiliki akun? <a class="btn btn-link" style="font-weight: 600;" data-bs-toggle="modal" data-bs-target="#Log_In">Log In</a></h5>
                     <form action="register.php" method="post">
                         <div class="input-group mb-3 mt-5 container">
                             <input id="regis-email" name="email" type="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" required>
@@ -466,91 +622,8 @@ require_once "config.php";
     </div>
     <!-- service-list -->
 
-    <!-- Service List Modal -->
-    <div class="modal fade" id="service-list" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content container-fluid" style="background-color: #141414; color: #ffffff; margin: 0; padding: 0;">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cari Teman</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #FAFF12; background-color: #FAFF12"></button>
-                </div>
-                <div class="modal-body" style="overflow-y: auto;">
-                    <div class="row">
-                        <?php
-                        // Sesuaikan ini dengan koneksi ke database Anda
-                        include "config.php";
 
 
-                        // Query SQL untuk mengambil data dari service_view
-                        $sql = "SELECT * FROM service_view";
-                        $result = $conn->query($sql);
-
-                        // Cek apakah hasil query kosong
-                        if ($result->num_rows > 0) {
-                            // Loop untuk setiap layanan
-                            while ($service = $result->fetch_assoc()) {
-                        ?>
-                                <!-- Konten kartu service -->
-                                <div class="col-12 col-sm-6 col-md-4 mb-3">
-                                    <div class="card bg-light d-flex flex-fill">
-                                        <div class="card-body">
-                                            <div class="row align-items-center">
-                                                <div class="col-5 text-center">
-                                                    <!-- Anda dapat mengganti sumber gambar dengan nilai yang sesuai dari database -->
-                                                    <img src="../dashboard/uploads/<?php echo basename($service['detail_image']); ?>" alt="" class="img-circle img-fluid" style="height: 150px; width: auto;">
-                                                </div>
-                                                <div class="col-7">
-                                                    <div class="card-header text-muted border-bottom-0">
-                                                        <!-- Anda perlu mengganti ini dengan data yang sesuai dari database -->
-                                                        <?php echo $service['service_game']; ?>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <h1 class="lead"><b><?php echo $service['service_name']; ?></b></h1>
-                                                        <ul class="ml-4 mb-0 fa-ul text-muted">
-                                                            <li class="small"><strong><?php echo ucfirst(strtolower($service['service_type'])); ?></strong></li>
-                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-gamepad"></i></span> <?php echo "Price: " . 'Rp ' . number_format($service['service_price'], 0, ',', '.'); ?></li>
-                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span> <?php echo "Hours: " . $service['service_start_hour'] . " - " . $service['service_end_hour']; ?></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <?php
-                                            if (isset($_SESSION['email'])) {
-                                                echo '<div class="row align-items-center">
-                                                <div class="col">
-                                                    <button class="btn btn-primary detail-service-btn" data-toggle="modal" data-target="#detailModal" data-service-id="' . $service['service_id'] . '">Detail</button>
-                                                </div> 
-                                            </div>';
-                                            } else {
-                                                echo '<div class="row align-items-center">
-                                                <div class="col">
-                                                    <button data-bs-dismiss="modal" class="btn btn-primary  detail-service-btn" data-toggle="modal" data-target="#Log_In" data-service-id="' . $service['service_id'] . '">Login</button>
-                                                </div> 
-                                            </div>';
-                                            }
-                                            ?>
-                                        </div>
-                                    </div>
-                                </div>
-                        <?php
-                            }
-                        } else {
-                            // Jika hasil query kosong, tampilkan pesan
-                            echo '<div class="col-12 text-center">
-                                <h1>Yahh Tunggu Masih Belum Ada Service yang Ada :(</h1>
-                              </div>';
-                        }
-
-                        // Tutup koneksi
-                        $conn->close();
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Order Modal -->
     <?php
@@ -565,7 +638,9 @@ require_once "config.php";
             <div class="modal-dialog modal-fullscreen">
                 <div class="modal-content container-fluid" style="background-color: #141414; color: #ffffff; margin: 0; padding: 0;">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><?php echo $_SESSION['email'] ?> Order List</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            <?php echo $_SESSION['email'] ?> Order List
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #FAFF12; background-color: #FAFF12"></button>
                     </div>
                     <div class="modal-body" style="overflow-y: auto;">
@@ -593,18 +668,28 @@ require_once "config.php";
                                                         <?php echo $service['service_game']; ?>
                                                     </div>
                                                     <div class="card-body">
-                                                        <h1 class="lead"><b><?php echo $service['service_name']; ?></b></h1>
+                                                        <h1 class="lead"><b>
+                                                                <?php echo $service['service_name']; ?>
+                                                            </b></h1>
                                                         <ul class="ml-4 mb-0 fa-ul text-muted">
-                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span> <?php echo "Hours: " . $service['service_start_hour'] . " - " . $service['service_end_hour']; ?></li>
-                                                            <li class="small"><strong><?php echo ucfirst(strtolower($service['service_type'])); ?></strong></li>
-                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-gamepad"></i></span> <?php echo "Description: " . $service['order_description']; ?></li>
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span>
+                                                                <?php echo "Hours: " . $service['service_start_hour'] . " - " . $service['service_end_hour']; ?>
+                                                            </li>
+                                                            <li class="small"><strong>
+                                                                    <?php echo ucfirst(strtolower($service['service_type'])); ?>
+                                                                </strong></li>
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-gamepad"></i></span>
+                                                                <?php echo "Description: " . $service['order_description']; ?>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card-footer">
-                                            <button class="btn btn-primary detail-service-btn"><?php echo $service['status'] ?></button>
+                                            <button class="btn btn-primary detail-service-btn">
+                                                <?php echo $service['status'] ?>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -699,7 +784,8 @@ require_once "config.php";
     </footer>
     <!-- Cari Service modal -->
 
-    <!-- <script type="text/javascript" src="script.js"></script> -->
+    <script type="text/javascript" src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->

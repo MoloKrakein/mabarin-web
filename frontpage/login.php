@@ -26,7 +26,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       echo "Invalid email or password.";
     }
     echo "Invalid email or password.";
-
   }
 }
-?>
