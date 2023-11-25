@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['user_id'])) {
+if (isset($_SESSION['user_id'])) {
     echo "User ID: " . $_SESSION['user_id'] . "<br>";
     echo "User Email: " . $_SESSION['user_email'];
 } else {
@@ -25,14 +25,14 @@ if(isset($_SESSION['user_id'])) {
             <div class="container-fluid">
                 <img src="assets/LOGO.png" alt="logo">
                 <form class="d-flex" role="search">
-                    
-                <?php if(isset($_SESSION['user_id'])): ?>
-                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Profile">Profile</button>
-                    <a href="logout.php" class="btn btn-warning ms-3">Sign Out</a>
-                <?php else: ?>
-                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Sign_Up">Sign Up</button>
-                    <button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Log_In">Log In</button>
-                <?php endif; ?>
+
+                    <?php if (isset($_SESSION['user_id'])) : ?>
+                        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Profile">Profile</button>
+                        <a href="logout.php" class="btn btn-warning ms-3">Sign Out</a>
+                    <?php else : ?>
+                        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Sign_Up">Sign Up</button>
+                        <button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Log_In">Log In</button>
+                    <?php endif; ?>
 
                     <!-- <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#Sign_In">Sign Up</button>
                     <button class="btn btn-warning ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Log_In">Log In</button> -->
@@ -315,7 +315,7 @@ if(isset($_SESSION['user_id'])) {
                     <div class="input-group mb-3 container">
                         <button class="btn btn-info w-100" type="button">Masuk</button>
                     </div>
-                    
+
                     <div class="input-group mb-3 container">
                         <div class="col-5 mt-3 d-flex justify-content-end">
                             <div style="border-top: 1px solid #AAAAAA; width: 100%;"></div>
@@ -351,7 +351,7 @@ if(isset($_SESSION['user_id'])) {
                     <div class="input-group mb-3 container">
                         <button id="sign-up" class="btn btn-info w-100" type="button">Daftar</button>
                     </div>
-                    
+
                     <div class="input-group mb-3 container">
                         <div class="col-5 mt-3 d-flex justify-content-end">
                             <div style="border-top: 1px solid #AAAAAA; width: 100%;"></div>
@@ -411,80 +411,89 @@ if(isset($_SESSION['user_id'])) {
     </script> -->
 
 
-    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
 <script type="module">
     // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
-import { GoogleAuthProvider, getAuth, signInWithRedirect, getRedirectResult} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+    import {
+        initializeApp
+    } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+    import {
+        getAnalytics
+    } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+    import {
+        GoogleAuthProvider,
+        getAuth,
+        signInWithRedirect,
+        getRedirectResult
+    } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDwmggIXG-wHw8zclFje9-QI8KHkNaQqd4",
-  authDomain: "mabarin-c1d84.firebaseapp.com",
-  databaseURL: "https://mabarin-c1d84-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "mabarin-c1d84",
-  storageBucket: "mabarin-c1d84.appspot.com",
-  messagingSenderId: "148935883756",
-  appId: "1:148935883756:web:f1f48b0d2968e17fd79ec9",
-  measurementId: "G-QS11PTV9JY"
-};
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyDwmggIXG-wHw8zclFje9-QI8KHkNaQqd4",
+        authDomain: "mabarin-c1d84.firebaseapp.com",
+        databaseURL: "https://mabarin-c1d84-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "mabarin-c1d84",
+        storageBucket: "mabarin-c1d84.appspot.com",
+        messagingSenderId: "148935883756",
+        appId: "1:148935883756:web:f1f48b0d2968e17fd79ec9",
+        measurementId: "G-QS11PTV9JY"
+    };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const provider = new GoogleAuthProvider();
-const auth = getAuth();
-// const auth2 = app.auth();
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    // const auth2 = app.auth();
 
-firebase.initializeApp(firebaseConfig);
-// const auth = firebase.auth();
-// const provider = new GoogleAuthProvider();
-// const app = initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
+    // const auth = firebase.auth();
+    // const provider = new GoogleAuthProvider();
+    // const app = initializeApp(firebaseConfig);
 
-const google_btn = document.getElementById('google_btn');
-google_btn.addEventListener('click', () => {
-    signInWithRedirect(auth, provider);
-});
+    const google_btn = document.getElementById('google_btn');
+    google_btn.addEventListener('click', () => {
+        signInWithRedirect(auth, provider);
+    });
 
 
-const sign_up = document.getElementById('sign-up');
-sign_up.addEventListener('click', () => {
-    // e.preventDefault();
+    const sign_up = document.getElementById('sign-up');
+    sign_up.addEventListener('click', () => {
+        // e.preventDefault();
 
-    const email = document.getElementById('sign-up-email').value;
-    const password = document.getElementById('sign-up-pass').value;
+        const email = document.getElementById('sign-up-email').value;
+        const password = document.getElementById('sign-up-pass').value;
 
-    auth.createUserWithEmailAndPassword(email, password).then(cred => {
-        console.log(cred.user);
-    })
-});
+        auth.createUserWithEmailAndPassword(email, password).then(cred => {
+            console.log(cred.user);
+        })
+    });
 
-const sign_up_google = document.getElementById('sign-up-google');
-sign_up_google.addEventListener('click', () => {
-    signInWithRedirect(auth, provider);
-});
+    const sign_up_google = document.getElementById('sign-up-google');
+    sign_up_google.addEventListener('click', () => {
+        signInWithRedirect(auth, provider);
+    });
 
-getRedirectResult(auth)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    console.log(user);
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode);
-    console.log(errorMessage);
-  });
+    getRedirectResult(auth)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            console.log(user);
+            // ...
+        }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+        });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
